@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class TicketController extends Controller
@@ -12,7 +13,7 @@ class TicketController extends Controller
     function tampil(): View
     {
         // ambil semua ticket
-        $tickets = Ticket::latest()->paginate(10);
+        $tickets = Ticket::paginate(10);
 
         // tampilkan data ticket
         return view('ticket.tampil', compact('tickets'));
@@ -36,7 +37,7 @@ class TicketController extends Controller
         $ticket = Ticket::findOrFail($id);
 
         // dikirim ke view
-        return view('ticket.show', compact('tickets'));
+        return view('ticket.show', compact('ticket'));
     }
 
     public function edit(string $id): View
@@ -44,6 +45,20 @@ class TicketController extends Controller
         // ambil ticket berdasarkan id
         $ticket = Ticket::findOrFail($id);
 
-        return view('ticket.edit', compact('tickets'));
+        return view('ticket.edit', compact('ticket'));
+    }
+
+    public function update(Request $request, $id): RedirectResponse
+    {
+        // dapat ticket berdasarkan Id
+        $ticket = Ticket::findOrFail($id);
+
+        // update ticket
+        $ticket->update([
+            'tipe_komplain' => $request->tipe_komplain,
+            'kendala' => $request->kendala,
+            'detail_penyelesaian' => $request->detail_penyelesaian,
+            'status' => $request->status
+        ]);
     }
 }

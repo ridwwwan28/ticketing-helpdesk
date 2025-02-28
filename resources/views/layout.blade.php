@@ -175,7 +175,7 @@ hs-overlay-open:translate-x-0
                 <!-- Logo -->
                 <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
                     href="#" aria-label="Preline">
-                    <img src="img/danpac-logo-wh.png" alt="Danpac Logo" width="150">
+                    <img src="public/img/danpac-logo-wh.png" alt="Danpac Logo" width="150">
                 </a>
                 <!-- End Logo -->
             </div>
