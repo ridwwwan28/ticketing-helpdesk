@@ -54,11 +54,11 @@ class TicketController extends Controller
         $ticket = Ticket::findOrFail($id);
 
         // update ticket
-        $ticket->update([
-            'tipe_komplain' => $request->tipe_komplain,
-            'kendala' => $request->kendala,
-            'detail_penyelesaian' => $request->detail_penyelesaian,
-            'status' => $request->status
-        ]);
+        $ticket->tipe_komplain = $request->tipe_komplain;
+        $ticket->detail_penyelesaian = $request->detail_penyelesaian;
+        $ticket->status = $request->status;
+        $ticket->update();
+
+        return redirect()->route('ticket.tampil')->with(['succes' => 'Data Berhasil Diubah']);
     }
 }
