@@ -163,10 +163,16 @@
                         <div class="py-2 px-2">
                             <span class="text-xs text-gray-500 uppercase">
                                 <a href="{{ route('ticket.show', $ticket->id) }}"
-                                    class="text-gray-500 hover:text-gray-800">tampil</a> |
+                                    class="text-gray-800 hover:text-gray-500">tampil</a> |
                                 <a href="{{ route('ticket.edit', $ticket->id) }}"
-                                    class="text-blue-500 hover:text-blue-800">ubah</a> | <a href=""
-                                    class="text-red-500 hover:text-red-800">hapus</a>
+                                    class="text-blue-500 hover:text-blue-800">ubah</a> |
+                                <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}"
+                                    onsubmit="return confirm('Apakah Anda Yakin?')" class="block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-xs uppercase text-red-500 hover:text-red-800">hapus</button>
+                                </form>
                             </span>
                         </div>
 

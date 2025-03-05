@@ -61,4 +61,15 @@ class TicketController extends Controller
 
         return redirect()->route('ticket.tampil')->with(['succes' => 'Data Berhasil Diubah']);
     }
+
+    public function destroy($id): RedirectResponse
+    {
+        // mendapatkan ticket berdasarkan id
+        $ticket = Ticket::findOrFail($id);
+
+        // hapus ticket
+        $ticket->delete();
+
+        return redirect()->route('ticket.tampil')->with(['succes' => 'Data Berhasil Dihapus']);
+    }
 }
