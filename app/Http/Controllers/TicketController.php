@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ComplainType;
 use App\Models\Ticket;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,7 +46,9 @@ class TicketController extends Controller
         // ambil ticket berdasarkan id
         $ticket = Ticket::findOrFail($id);
 
-        return view('ticket.edit', compact('ticket'));
+        $type_komplain = ComplainType::all();
+
+        return view('ticket.edit', compact('ticket'), compact('type_komplain'));
     }
 
     public function update(Request $request, $id): RedirectResponse
