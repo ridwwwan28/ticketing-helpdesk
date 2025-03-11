@@ -30,10 +30,22 @@
                         Sign in to start your session
                     </div>
 
+                    @if (session('failed'))
+                        <div class="">
+                            <p id="hs-dismiss-button-label" class="text-xs font-normal">
+                                {{ session('failed') }}
+                            </p>
+                        </div>
+                    @endif
+
                     <!-- Form -->
-                    <form method="POST" action="login">
+                    <form method="POST" action="/">
+                        @csrf
                         <div class="grid gap-y-4">
                             <!-- Form Group -->
+                            @error('email')
+                                <span>{{ $message }}</span>
+                            @enderror
                             <div>
                                 <label for="email" class="block text-sm mb-2">Email address</label>
                                 <div class="relative">
@@ -54,6 +66,9 @@
                             <!-- End Form Group -->
 
                             <!-- Form Group -->
+                            @error('password')
+                                <span>{{ $message }}</span>
+                            @enderror
                             <div>
                                 <div class="flex justify-between items-center">
                                     <label for="password" class="block text-sm mb-2">Password</label>

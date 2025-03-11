@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('divisi', length: 50);
             $table->string('group', length: 20);
             $table->integer('level');
+            $table->enum('role', ['superadmin', 'admin', 'user']);
             $table->integer('status');
             $table->string('profile_pic');
             $table->timestamp('email_verified_at')->nullable();
