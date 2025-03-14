@@ -10,7 +10,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('/', fn() => view('auth.login'))->name('login');
 Route::post('/', [AuthController::class, 'login']);
 
-Route::get('/users', fn() => view('auth.users'));
+Route::get('/users', [AuthController::class, 'tampilUser'])->name('auth.users');
 
 Route::resource('/ticket', \App\Http\Controllers\TicketController::class);
 

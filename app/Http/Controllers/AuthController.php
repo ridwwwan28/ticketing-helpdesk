@@ -31,6 +31,6 @@ class AuthController extends Controller
     {
         $users = User::paginate(10);
 
-        return view('auth.user', compact('users'));
+        return view('auth.users', compact('users'));
     }
 }
