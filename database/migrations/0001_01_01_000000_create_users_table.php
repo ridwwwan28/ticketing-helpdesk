@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('level');
             $table->enum('role', ['superadmin', 'admin', 'user']);
             $table->integer('status');
-            $table->string('profile_pic');
+            $table->string('profile_pic')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

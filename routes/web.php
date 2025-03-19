@@ -10,12 +10,15 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('/', fn() => view('auth.login'))->name('login');
 Route::post('/', [AuthController::class, 'login']);
 
-Route::get('/users', [AuthController::class, 'tampilUser'])->name('auth.users');
+
 
 Route::resource('/ticket', \App\Http\Controllers\TicketController::class);
 
 Route::group(['middleware' => ['auth', 'check_role:superadmin,admin']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/users', [AuthController::class, 'tampilUser'])->name('auth.users');
+    Route::resource('/auth', \App\Http\Controllers\AuthController::class);
+    Route::post('auth/submit', [AuthController::class, 'submit'])->name('auth.submit');
 });
 
 Route::group(['middleware' => ['auth', 'check_role:user']], function () {
