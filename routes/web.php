@@ -19,13 +19,14 @@ Route::group(['middleware' => ['auth', 'check_role:superadmin,admin']], function
     Route::get('/users', [AuthController::class, 'tampilUser'])->name('auth.users');
     Route::resource('/auth', \App\Http\Controllers\AuthController::class);
     Route::post('auth/submit', [AuthController::class, 'submit'])->name('auth.submit');
+    Route::get('/logout', [AuthController::class, 'logout']);
 });
 
 Route::group(['middleware' => ['auth', 'check_role:user']], function () {
     Route::get('/home', fn() => 'halaman home');
+    Route::get('/logout', [AuthController::class, 'logout']);
 });
 
-Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::get('/ticket', [TicketController::class, 'tampil'])->name('ticket.tampil');
 

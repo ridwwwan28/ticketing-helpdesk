@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
@@ -50,6 +51,32 @@ class AuthController extends Controller
         $user->status = $request->status;
         $user->save();
 
+        return redirect()->route('auth.users');
+    }
+
+    function edit(string $id): View
+    {
+        // ambil data user berdasarkan id
+        $user = User::findOrFail($id);
+
+        // tampilkan di form edit user
+        return view('auth.edit', compact('user'));
+    }
+
+    public function update(Request $request, $id): RedirectResponse
+    {
+        // ambil data user berdasarkan id
+        $user = User::findOrFail($id);
+
+        // update data
+        $user->divisi = $request->divisi;
+        $user->level = $request->level;
+        $user->role = $request->role;
+        $user->group = $request->grup;
+        $user->status = $request->status;
+        $user->update();
+
+        // kembali ke halaman tampil data
         return redirect()->route('auth.users');
     }
 }
