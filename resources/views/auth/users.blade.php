@@ -159,7 +159,10 @@
                             </a>
 
                             <form method="POST" action="" class="inline-flex items-center">
-                                <a class="inline-flex items-center gap-x-1 text-xs font-medium bg-red-600 rounded-lg py-1 px-1.5 text-black decoration-2 hover:bg-red-700 focus:outline-none focus:bg-red-700"
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="inline-flex items-center gap-x-1 text-xs font-medium bg-red-600 rounded-lg py-1 px-1.5 text-black decoration-2 hover:bg-red-700 focus:outline-none focus:bg-red-700"
                                     href="#">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -171,7 +174,7 @@
                                         <line x1="14" x2="14" y1="11" y2="17" />
                                     </svg>
                                     HAPUS
-                                </a>
+                                </button>
                             </form>
                         </div>
                     </td>
