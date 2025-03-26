@@ -162,7 +162,7 @@
                     <td class="size-px whitespace-nowrap">
                         <div class="py-2 px-2">
                             <a href="{{ route('ticket.show', $ticket->id) }}"
-                                class="inline-flex items-center gap-x-1 text-xs font-medium bg-blue-500 rounded-lg py-1 px-1.5 text-black decoration-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                                class="inline-flex items-center gap-x-1 text-xs font-medium bg-blue-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="lucide lucide-list">
@@ -177,7 +177,7 @@
                             </a>
                             @if (auth()->user()->role != 'user')
                                 <a href="{{ route('ticket.edit', $ticket->id) }}"
-                                    class="inline-flex items-center gap-x-1 text-xs font-medium bg-orange-300 rounded-lg py-1 px-1.5 text-black decoration-2 hover:bg-orange-500 focus:outline-none focus:bg-orange-500">
+                                    class="inline-flex items-center gap-x-1 text-xs font-medium bg-orange-400 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-orange-500 focus:outline-none focus:bg-orange-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">
@@ -197,7 +197,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="gap-x-1 text-xs font-medium bg-red-600 rounded-lg py-1 px-1.5 text-black decoration-2 hover:bg-red-700 focus:outline-none focus:bg-red-700">
+                                        class="inline-flex items-center gap-x-1 text-xs font-medium bg-red-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-red-600 focus:outline-none focus:bg-red-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
@@ -231,6 +231,7 @@
 
         <div>
             <div class="inline-flex gap-x-2">
+                {{ $tickets->links() }}
                 {{-- <button type="button"
                     class="py-1.5 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50">
                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -240,7 +241,7 @@
                     </svg>
                     Prev
                 </button> --}}
-                {{ $tickets->links() }}
+
                 {{-- <button type="button"
                     class="py-1.5 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50">
                     Next
@@ -283,18 +284,14 @@
                     <div class="p-4 overflow-y-auto">
                         <!-- Content Modal -->
                         <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label for="nomor-tiket" class="block text-sm font-medium mb-2">Nomor Ticket</label>
-                                <input type="text" id="nomor-ticket" name="no_tiket"
-                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    required>
-                            </div>
-                            <div>
+                            <div class="col-span-2">
                                 <label for="nama-user" class="block text-sm font-medium mb-2">Nama Pengguna</label>
                                 <input type="text" id="nama-user" name="nama"
                                     class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    required>
+                                    value="{{ auth()->user()->name }}" disabled>
+                                <input type="hidden" name="email_user" value="{{ auth()->user()->email }}">
                             </div>
+
                             <div class="lg:col-span-2">
                                 <label for="kendala" class="block text-sm font-medium mb-2">Kendala</label>
                                 <textarea id="kendala" name="kendala"

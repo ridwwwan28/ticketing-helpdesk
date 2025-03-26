@@ -22,9 +22,25 @@ class TicketController extends Controller
 
     function submit(Request $request): RedirectResponse
     {
+        $ambilTicket = Ticket::latest()->first();
+        $kodeDepan = "HD";
+        $kodeTahun = date('Y');
+        $kodeBulan = date('m');
+
+        if ($ambilTicket == null) {
+            // kode pertama;
+            $nomorUrut = "0001";
+        } else {
+            // kode berikutnya
+            $nomorUrut = substr($ambilTicket->no_tiket, 8, 4) + 1;
+
+            $nomorUrut = str_pad($nomorUrut, 4, "0", STR_PAD_LEFT);
+        }
+        $kodeTicket = $kodeDepan . $kodeTahun . $kodeBulan . $nomorUrut;
+
         $ticket = new Ticket();
-        $ticket->no_tiket = $request->no_tiket;
-        $ticket->username = $request->nama;
+        $ticket->no_tiket = $kodeTicket;
+        $ticket->username = $request->email_user;
         $ticket->kendala = $request->kendala;
         $ticket->status = "MENUNGGU";
         $ticket->save();
