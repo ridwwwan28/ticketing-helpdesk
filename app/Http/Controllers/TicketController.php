@@ -20,8 +20,13 @@ class TicketController extends Controller
         return view('ticket.tampil', compact('tickets'));
     }
 
+    // function tampilUser(){
+    //     $ticketUser = 
+    // }
+
     function submit(Request $request): RedirectResponse
     {
+        // ambil record ticket yg terakhir
         $ambilTicket = Ticket::latest()->first();
         $kodeDepan = "HD";
         $kodeTahun = date('Y');

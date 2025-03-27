@@ -7,17 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
-    <style>
-        .dt-layout-row:has(.dt-search),
-        .dt-layout-row:has(.dt-length),
-        .dt-layout-row:has(.dt-paging) {
-            display: none !important;
-        }
-    </style>
     <title>Ticket Page</title>
 </head>
 
-<body class="bg-gray-200">
+<body class="bg-gray-50">
     <!-- ========== HEADER ========== -->
     <header
         class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 lg:ps-[260px]">
@@ -151,7 +144,7 @@
                     </svg>
                 </li>
                 <li class="text-sm font-semibold text-gray-800 truncate" aria-current="page">
-                    Ticket
+                    Home
                 </li>
             </ol>
             <!-- End Breadcrumb -->
@@ -162,7 +155,7 @@
     <!-- Sidebar -->
     <div id="hs-application-sidebar"
         class="hs-overlay [--auto-close:lg]
-hs-overlay-open:translate-x-0
+  hs-overlay-open:translate-x-0
   -translate-x-full transition-all duration-300 transform
   w-[260px] h-full
   hidden
@@ -175,7 +168,7 @@ hs-overlay-open:translate-x-0
                 <!-- Logo -->
                 <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
                     href="#" aria-label="Preline">
-                    <img src="{{ asset('/public/img/danpac-logo-wh.png') }}" alt="Danpac Logo" width="150">
+                    <img src="{{ asset('img/danpac-logo-wh.png') }}" alt="Danpac Logo" width="150">
                 </a>
                 <!-- End Logo -->
             </div>
@@ -185,36 +178,21 @@ hs-overlay-open:translate-x-0
                 class="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
                 <nav class="hs-accordion-group p-3 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
                     <ul class="flex flex-col space-y-1">
-                        @if (auth()->user()->role == 'superadmin' || auth()->user()->role == 'admin')
-                            <li>
-                                <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                    href="/dashboard">
-                                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                                        <polyline points="9 22 9 12 15 12 15 22" />
-                                    </svg>
-                                    Dashboard
-                                </a>
-                            </li>
-                        @else
-                            <li>
-                                <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                    href="/home">
-                                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                                        <polyline points="9 22 9 12 15 12 15 22" />
-                                    </svg>
-                                    Home
-                                </a>
-                            </li>
-                        @endif
+                        <li>
+                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 bg-white/20 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                href="/home">
+                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                    <polyline points="9 22 9 12 15 12 15 22" />
+                                </svg>
+                                Home
+                            </a>
+                        </li>
 
-                        <li class="hs-accordion" id="tickets-accordion">
-                            <a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 bg-white/20 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        <li class="hs-accordion" id="projects-accordion">
+                            <a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
                                 href="/ticket">
                                 <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -325,57 +303,192 @@ hs-overlay-open:translate-x-0
     <!-- End Sidebar -->
 
     <!-- Content -->
-    <div class="w-[calc(100% - 260px)] ml-2 mr-2 lg:ml-[266px]">
+    <div class="w-[calc(100% - 260px)] ml-1 mr-1 lg:ml-[264px]">
         <!-- your content goes here ... -->
-        <!-- Table Section -->
-
-        <!-- Card -->
-        <div class="flex flex-col">
-            <div class="-m-1.5 overflow-x-auto">
-                <div class="p-1.5 min-w-full inline-block align-middle">
-                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-                        @yield('konten')
+        <!-- Card Section -->
+        <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+            <!-- Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <!-- Card -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl">
+                    <div class="p-4 md:p-5 flex justify-between gap-x-3">
+                        <div>
+                            <p class="text-xs uppercase tracking-wide text-gray-500">
+                                Total users
+                            </p>
+                            <div class="mt-1 flex items-center gap-x-2">
+                                <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
+                                    72,540
+                                </h3>
+                                <span class="flex items-center gap-x-1 text-green-600">
+                                    <svg class="inline-block size-5 self-center" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                                        <polyline points="16 7 22 7 22 13" />
+                                    </svg>
+                                    <span class="inline-block text-lg">
+                                        1.7%
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="shrink-0 flex justify-center items-center size-[46px] bg-blue-600 text-white rounded-full">
+                            <svg class="shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                        </div>
                     </div>
+
+                    <a class="py-3 px-4 md:px-5 inline-flex justify-between items-center text-sm text-gray-600 border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 rounded-b-xl"
+                        href="#">
+                        View reports
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </a>
                 </div>
+                <!-- End Card -->
+
+                <!-- Card -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl">
+                    <div class="p-4 md:p-5 flex justify-between gap-x-3">
+                        <div>
+                            <p class="text-xs uppercase tracking-wide text-gray-500">
+                                Sessions
+                            </p>
+                            <div class="mt-1 flex items-center gap-x-2">
+                                <h3 class="mt-1 text-xl font-medium text-gray-800">
+                                    29.4%
+                                </h3>
+                            </div>
+                        </div>
+                        <div
+                            class="shrink-0 flex justify-center items-center size-[46px] bg-blue-600 text-white rounded-full">
+                            <svg class="shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 22h14" />
+                                <path d="M5 2h14" />
+                                <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+                                <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <a class="py-3 px-4 md:px-5 inline-flex justify-between items-center text-sm text-gray-600 border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 rounded-b-xl"
+                        href="#">
+                        View reports
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </a>
+                </div>
+                <!-- End Card -->
+
+                <!-- Card -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl">
+                    <div class="p-4 md:p-5 flex justify-between gap-x-3">
+                        <div>
+                            <p class="text-xs uppercase tracking-wide text-gray-500">
+                                Avg. Click Rate
+                            </p>
+                            <div class="mt-1 flex items-center gap-x-2">
+                                <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
+                                    56.8%
+                                </h3>
+                                <span class="flex items-center gap-x-1 text-red-600">
+                                    <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
+                                        <polyline points="16 17 22 17 22 11" />
+                                    </svg>
+                                    <span class="inline-block text-lg">
+                                        1.7%
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="shrink-0 flex justify-center items-center size-[46px] bg-blue-600 text-white rounded-full">
+                            <svg class="shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6" />
+                                <path d="m12 12 4 10 1.7-4.3L22 16Z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <a class="py-3 px-4 md:px-5 inline-flex justify-between items-center text-sm text-gray-600 border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 rounded-b-xl"
+                        href="#">
+                        View reports
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </a>
+                </div>
+                <!-- End Card -->
+
+                <!-- Card -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl">
+                    <div class="p-4 md:p-5 flex justify-between gap-x-3">
+                        <div>
+                            <p class="text-xs uppercase tracking-wide text-gray-500">
+                                Pageviews
+                            </p>
+                            <div class="mt-1 flex items-center gap-x-2">
+                                <h3 class="mt-1 text-xl font-medium text-gray-800">
+                                    92,913
+                                </h3>
+                            </div>
+                        </div>
+                        <div
+                            class="shrink-0 flex justify-center items-center size-[46px] bg-blue-600 text-white rounded-full">
+                            <svg class="shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12s2.545-5 7-5c4.454 0 7 5 7 5s-2.546 5-7 5c-4.455 0-7-5-7-5z" />
+                                <path d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                                <path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2" />
+                                <path d="M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <a class="py-3 px-4 md:px-5 inline-flex justify-between items-center text-sm text-gray-600 border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 rounded-b-xl"
+                        href="#">
+                        View reports
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </a>
+                </div>
+                <!-- End Card -->
             </div>
+            <!-- End Grid -->
         </div>
-        <!-- End Card -->
-
-        <! -- End Table Section -->
+        <!-- End Card Section -->
     </div>
-
-
-
     <!-- End Content -->
     <!-- ========== END MAIN CONTENT ========== -->
-
-    <!-- Javascript -->
-    <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/datatables.net/js/dataTables.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        //message with sweetalert
-        @if (session('success'))
-            Swal.fire({
-                icon: "success",
-                title: "BERHASIL",
-                text: "{{ session('success') }}",
-                showConfirmButton: false,
-                timer: 2000
-            });
-        @elseif (session('error'))
-            Swal.fire({
-                icon: "error",
-                title: "GAGAL!",
-                text: "{{ session('error') }}",
-                showConfirmButton: false,
-                timer: 2000
-            })
-        @endif
-    </script>
-
-    <!-- End Javascript -->
 </body>
 
 </html>

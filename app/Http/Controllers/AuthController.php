@@ -22,7 +22,7 @@ class AuthController extends Controller
             if (Auth::user()->role == 'user' && Auth::user()->status == 1) return redirect('/home');
             return redirect('/dashboard');
         }
-        return back()->with('failed', 'Email atau Password salah');
+        return back()->with('failed', 'Email atau Password Salah!');
     }
 
     public function logout()

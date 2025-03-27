@@ -16,6 +16,7 @@ Route::resource('/ticket', \App\Http\Controllers\TicketController::class);
 
 Route::group(['middleware' => ['auth', 'check_role:superadmin,admin']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/ticket', [TicketController::class, 'tampil'])->name('ticket.tampil');
     Route::get('/users', [AuthController::class, 'tampilUser'])->name('auth.users');
     Route::resource('/auth', \App\Http\Controllers\AuthController::class);
     Route::post('auth/submit', [AuthController::class, 'submit'])->name('auth.submit');
@@ -23,11 +24,8 @@ Route::group(['middleware' => ['auth', 'check_role:superadmin,admin']], function
 });
 
 Route::group(['middleware' => ['auth', 'check_role:user']], function () {
-    Route::get('/home', fn() => 'halaman home');
+    Route::get('/home', [DashboardController::class, 'home']);
+    Route::get('/ticket', [TicketController::class, 'tampilUser'])->name('ticket.tampil_user');
+    Route::post('ticket/submit', [TicketController::class, 'submit'])->name('ticket.submit');
     Route::get('/logout', [AuthController::class, 'logout']);
 });
-
-
-Route::get('/ticket', [TicketController::class, 'tampil'])->name('ticket.tampil');
-
-Route::post('ticket/submit', [TicketController::class, 'submit'])->name('ticket.submit');

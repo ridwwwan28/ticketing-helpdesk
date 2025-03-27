@@ -44,7 +44,12 @@
                         <div class="grid gap-y-4">
                             <!-- Form Group -->
                             @error('email')
-                                <span>{{ $message }}</span>
+                                <span class="mt-2 bg-red-500 text-sm text-white rounded-lg p-4">{{ $message }}</span>
+                                <div class="mt-2 bg-red-500 text-sm text-white rounded-lg p-4" role="alert" tabindex="-1"
+                                    aria-labelledby="hs-solid-color-danger-label">
+                                    <span id="hs-solid-color-danger-label" class="font-bold">Danger</span> alert! You should
+                                    check in on some of those fields below.
+                                </div>
                             @enderror
                             <div>
                                 <label for="email" class="block text-sm mb-2">Email address</label>
