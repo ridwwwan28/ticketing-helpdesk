@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('kendala');
             $table->text('detail_penyelesaian')->nullable();
             $table->timestamps();
-            $table->string('status', length: 10)->default('MENUNGGU');
+            $table->string('status', length: 10)->default('RECEIVED');
             $table->dateTime('tgl_selesai')->nullable();
         });
     }

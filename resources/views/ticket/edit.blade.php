@@ -12,34 +12,34 @@
             <!-- Content Modal -->
             <div class="grid grid-cols-2 gap-2">
                 <div>
-                    <label for="nomor-tiket" class="block text-sm font-medium mb-2">Nomor Ticket</label>
+                    <label for="nomor-tiket" class="block text-sm font-medium mb-2">Ticket ID</label>
                     <input type="text" id="nomor-ticket" name="no_tiket"
                         class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                         value="{{ old('tiket', $ticket->no_tiket) }}" disabled>
                 </div>
                 <div>
-                    <label for="nama-user" class="block text-sm font-medium mb-2">Nama Pengguna</label>
+                    <label for="nama-user" class="block text-sm font-medium mb-2">Username</label>
                     <input type="text" id="nama-user" name="nama"
                         class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                         value="{{ old('nama', $ticket->username) }}" disabled>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="kendala" class="block text-sm font-medium mb-2">Kendala</label>
+                    <label for="kendala" class="block text-sm font-medium mb-2">Problem</label>
                     <textarea id="kendala" name="kendala"
                         class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                         rows="3" placeholder="Ketik kendalanya disini..." disabled>{{ old('kendala', $ticket->kendala) }}</textarea>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="detail_penyelesaian" class="block text-sm font-medium mb-2">Detail Penyelesaian</label>
+                    <label for="detail_penyelesaian" class="block text-sm font-medium mb-2">Detail Solution</label>
                     <textarea id="detail_penyelesaian" name="detail_penyelesaian"
                         class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                         rows="3" placeholder="Detail Penyelesaian...">{{ old('detail_penyelesaian', $ticket->detail_penyelesaian) }}</textarea>
                 </div>
                 <div>
-                    <label for="tipe-komplain" class="block text-sm font-medium mb-2">Type Komplain</label>
+                    <label for="tipe-komplain" class="block text-sm font-medium mb-2">Complain Type</label>
                     <select name="tipe_komplain" id="tipe-komplain"
                         class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                        <option value="">-- TYPE KOMPLAIN --</option>
+                        <option value="">-- Complain Type --</option>
                         @foreach ($type_komplain as $item)
                             <option value={{ $item->id }}
                                 @if ($ticket->tipe_komplain == $item->id) @selected(true) @endif>
@@ -52,26 +52,26 @@
                     <label for="status" class="block text-sm font-medium mb-2">Status</label>
                     <select name="status" id="status"
                         class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                        <option value="">-- PILIH STATUS --</option>
-                        <option value="MENUNGGU" @if ($ticket->status == 'MENUNGGU') @selected(true) @endif>
-                            MENUNGGU
+                        <option value="">-- CHOOSE STATUS --</option>
+                        <option value="RECEIVED" @if ($ticket->status == 'RECEIVED') @selected(true) @endif>
+                            RECEIVED
                         </option>
-                        <option value="PROSES" @if ($ticket->status == 'PROSES') @selected(true) @endif>
-                            PROSES
+                        <option value="IN PROCESS" @if ($ticket->status == 'IN PROCESS') @selected(true) @endif>
+                            IN PROCESS
                         </option>
-                        <option value="SELESAI" @if ($ticket->status == 'SELESAI') @selected(true) @endif>
-                            SELESAI
+                        <option value="DONE" @if ($ticket->status == 'DONE') @selected(true) @endif>
+                            DONE
                         </option>
                     </select>
                 </div>
                 <div>
-                    <label for="tgl-buat" class="block text-sm font-medium mb-2">Tanggal Buat</label>
+                    <label for="tgl-buat" class="block text-sm font-medium mb-2">Created Date</label>
                     <input type="text" id="tgl-buat" name="tgl_buat"
                         class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                         value="{{ old('tgl_buat', $ticket->created_at) }}" disabled>
                 </div>
                 <div>
-                    <label for="tgl-selesai" class="block text-sm font-medium mb-2">Tanggal Selesai</label>
+                    <label for="tgl-selesai" class="block text-sm font-medium mb-2">Finished Date</label>
                     <input type="text" id="tgl-selesai" name="tgl_selesai"
                         class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                         value="{{ old('tgl_selesai', $ticket->tgl_selesai) }}">
