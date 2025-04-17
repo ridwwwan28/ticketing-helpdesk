@@ -14,7 +14,7 @@
             display: none !important;
         }
     </style>
-    <title>Ticket Page</title>
+    <title>DANPAC TICKET</title>
 </head>
 
 <body class="bg-gray-200">
@@ -26,7 +26,7 @@
                 <!-- Logo -->
                 <a class="flex-none rounded-md text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
                     href="#" aria-label="Preline">
-                    <img src="img/danpac-logo-blue.png" alt="Danpac Logo" width="200">
+                    <img src="{{ asset('img/danpac-logo-blue.png') }}" alt="Danpac Logo" width="200">
                 </a>
                 <!-- End Logo -->
 
@@ -60,8 +60,7 @@
                         <button id="hs-dropdown-account" type="button"
                             class="size-[38px] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
                             aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                            <img class="shrink-0 size-[38px] rounded-full"
-                                src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
+                            <img class="shrink-0 size-[38px] rounded-full" src="{{ asset('img/user-icon.jpg') }}"
                                 alt="Avatar">
                         </button>
 
@@ -102,7 +101,7 @@
                                     Account
                                 </a>
                                 <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                    href="/logout">
+                                    href="/logout" onclick="return confirm('Anda yakin akan logout?')">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out">
@@ -175,7 +174,7 @@ hs-overlay-open:translate-x-0
                 <!-- Logo -->
                 <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
                     href="#" aria-label="Preline">
-                    <img src="{{ asset('/public/img/danpac-logo-wh.png') }}" alt="Danpac Logo" width="150">
+                    <img src="{{ asset('img/danpac-logo-wh.png') }}" alt="Danpac Logo" width="150">
                 </a>
                 <!-- End Logo -->
             </div>
@@ -243,67 +242,83 @@ hs-overlay-open:translate-x-0
                             </li>
                         @endif
 
-                        <li class="hs-accordion" id="account-accordion">
-                            <button type="button"
-                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                aria-expanded="true" aria-controls="account-accordion-child">
-                                <svg class="shrink-0 mt-0.5 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="18" cy="15" r="3" />
-                                    <circle cx="9" cy="7" r="4" />
-                                    <path d="M10 15H6a4 4 0 0 0-4 4v2" />
-                                    <path d="m21.7 16.4-.9-.3" />
-                                    <path d="m15.2 13.9-.9-.3" />
-                                    <path d="m16.6 18.7.3-.9" />
-                                    <path d="m19.1 12.2.3-.9" />
-                                    <path d="m19.6 18.7-.4-1" />
-                                    <path d="m16.8 12.3-.4-1" />
-                                    <path d="m14.3 16.6 1-.4" />
-                                    <path d="m20.7 13.8 1-.4" />
-                                </svg>
-                                Account
+                        @if (auth()->user()->role == 'superadmin')
+                            <li class="hs-accordion" id="users-accordion">
+                                <a href="#"
+                                    class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10">
+                                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                        <circle cx="9" cy="7" r="4" />
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                    </svg>
+                                    Complain Type
+                                </a>
+                            </li>
+                        @endif
 
-                                <svg class="hs-accordion-active:block ms-auto hidden size-4"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m18 15-6-6-6 6" />
-                                </svg>
+                        @if (auth()->user()->role == 'superadmin')
+                            <li class="hs-accordion" id="account-accordion">
+                                <button type="button"
+                                    class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                    aria-expanded="true" aria-controls="account-accordion-child">
 
-                                <svg class="hs-accordion-active:hidden ms-auto block size-4"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m6 9 6 6 6-6" />
-                                </svg>
-                            </button>
+                                    <svg class="shrink-0 mt-0.5 size-4" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-list-icon lucide-list">
+                                        <path d="M3 12h.01" />
+                                        <path d="M3 18h.01" />
+                                        <path d="M3 6h.01" />
+                                        <path d="M8 12h13" />
+                                        <path d="M8 18h13" />
+                                        <path d="M8 6h13" />
+                                    </svg>
+                                    Master Data
 
-                            <div id="account-accordion-child"
-                                class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden"
-                                role="region" aria-labelledby="account-accordion">
-                                <ul class="ps-8 pt-1 space-y-1">
-                                    <li>
-                                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                            href="#">
-                                            Link 1
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                            href="#">
-                                            Link 2
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                            href="#">
-                                            Link 3
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                                    <svg class="hs-accordion-active:block ms-auto hidden size-4"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m18 15-6-6-6 6" />
+                                    </svg>
+
+                                    <svg class="hs-accordion-active:hidden ms-auto block size-4"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m6 9 6 6 6-6" />
+                                    </svg>
+                                </button>
+
+                                <div id="account-accordion-child"
+                                    class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden"
+                                    role="region" aria-labelledby="account-accordion">
+                                    <ul class="ps-8 pt-1 space-y-1">
+                                        <li>
+                                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                href="#">
+                                                Link 1
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                href="#">
+                                                Link 2
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                href="#">
+                                                Link 3
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        @endif
 
                         <li><a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10"
                                 href="#">
@@ -353,6 +368,8 @@ hs-overlay-open:translate-x-0
     <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/datatables.net/js/dataTables.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('./node_modules/lodash/lodash.min.js') }}"></script>
+    <script src="{{ asset('./node_modules/dropzone/dist/dropzone-min.js') }}"></script>
 
     <script>
         //message with sweetalert

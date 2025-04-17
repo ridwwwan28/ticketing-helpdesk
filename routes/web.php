@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ComplaintypeController;
+use App\Models\ComplainType;
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -26,6 +28,9 @@ Route::group(['middleware' => ['auth', 'check_role:superadmin,admin']], function
     Route::get('/users', [AuthController::class, 'tampilUser'])->name('auth.users');
     Route::resource('/auth', \App\Http\Controllers\AuthController::class);
     Route::post('auth/submit', [AuthController::class, 'submit'])->name('auth.submit');
+
+    Route::resource('/complaintype', \App\Http\Controllers\ComplaintypeController::class);
+    Route::get('/complain_type', [ComplaintypeController::class, 'tampilListComplain'])->name('complaintype.list');
 });
 
 Route::group(['middleware' => ['auth', 'check_role:user']], function () {

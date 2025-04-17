@@ -69,14 +69,6 @@
                 <th scope="col" class="px-6 py-3 text-start">
                     <div class="flex items-center gap-x-2">
                         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                            Penyelesaian
-                        </span>
-                    </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-start">
-                    <div class="flex items-center gap-x-2">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
                             Tgl Buat
                         </span>
                     </div>
@@ -129,13 +121,6 @@
                     <td class="size-px whitespace-nowrap">
                         <div class="py-2 px-2">
                             <span class="text-xs text-gray-800">{{ $ticket->kendala }}</span>
-                        </div>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                        <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">
-                                {{ $ticket->detail_penyelesaian }}
-                            </span>
                         </div>
                     </td>
                     <td class="size-px whitespace-nowrap">
