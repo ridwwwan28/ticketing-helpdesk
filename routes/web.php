@@ -30,7 +30,8 @@ Route::group(['middleware' => ['auth', 'check_role:superadmin,admin']], function
     Route::post('auth/submit', [AuthController::class, 'submit'])->name('auth.submit');
 
     Route::resource('/complaintype', \App\Http\Controllers\ComplaintypeController::class);
-    Route::get('/complain_type', [ComplaintypeController::class, 'tampilListComplain'])->name('complaintype.list');
+    Route::get('/complaintype', [ComplaintypeController::class, 'tampilListComplain'])->name('complaintype.list');
+    Route::post('/complaintype/submit', [ComplaintypeController::class, 'submit'])->name('complaintype.submit');
 });
 
 Route::group(['middleware' => ['auth', 'check_role:user']], function () {

@@ -15,9 +15,10 @@ class TicketController extends Controller
     {
         // ambil semua ticket
         $tickets = Ticket::paginate(10);
+        $komplain_tipe = ComplainType::all();
 
         // tampilkan data ticket
-        return view('ticket.tampil', compact('tickets'));
+        return view('ticket.tampil', compact('tickets'), compact('komplain_tipe'));
     }
 
     function submit(Request $request): RedirectResponse
@@ -43,7 +44,7 @@ class TicketController extends Controller
         $ticket->no_tiket = $kodeTicket;
         $ticket->username = $request->email_user;
         $ticket->kendala = $request->kendala;
-        $ticket->status = "MENUNGGU";
+        $ticket->status = "OPEN";
         $ticket->save();
 
         return redirect()->route('ticket.tampil')->with(['succes' => 'Data Berhasil Disimpan']);

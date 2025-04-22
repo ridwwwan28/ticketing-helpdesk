@@ -2,32 +2,29 @@
 
 @section('konten')
     <!-- Header -->
-    <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200">
-        <div>
-            <h2 class="text-xl font-semibold text-gray-800">
-                Ticket
-            </h2>
-            <p class="text-sm text-gray-600">
-                Klik Tambah untuk membuat ticket bantuan IT.
-            </p>
-        </div>
 
+    <div class="px-6 py-4 grid gap-3 md:justify-between md:items-center">
         <div>
-            <div class="inline-flex gap-x-2">
-                <a class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                    aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-backdrop-modal"
-                    data-hs-overlay="#hs-static-backdrop-modal" href="#">
-                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M5 12h14" />
-                        <path d="M12 5v14" />
-                    </svg>
-                    Buat Ticket
-                </a>
-            </div>
+            <h2 class="text-xl font-semibold text-gray-800">Ticket</h2>
+            <p class="text-sm text-gray-600">Klik Tambah untuk membuat ticket bantuan IT.</p>
         </div>
     </div>
+    <div class="px-6 py-3 md:border-b border-gray-200">
+        <div class="inline-flex gap-x-2">
+            <a class="py-2 px-2 inline-flex items-center gap-x-1 text-sm font-medium rounded-md border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-backdrop-modal"
+                data-hs-overlay="#hs-static-backdrop-modal" href="#">
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                </svg>
+                Buat Ticket
+            </a>
+        </div>
+    </div>
+
     <!-- End Header -->
 
     <!-- Table -->
@@ -61,7 +58,7 @@
                 <th scope="col" class="px-6 py-3 text-start">
                     <div class="flex items-center gap-x-2">
                         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                            Kendala
+                            Type Komplain
                         </span>
                     </div>
                 </th>
@@ -102,7 +99,7 @@
 
         <tbody class="divide-y divide-gray-200">
             @foreach ($tickets as $no => $ticket)
-                <tr>
+                <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
                     <td class="size-px whitespace-nowrap">
                         <div class="py-2 px-2">
                             <span class="text-xs text-gray-800">{{ $no + 1 }}</span>
@@ -120,7 +117,7 @@
                     </td>
                     <td class="size-px whitespace-nowrap">
                         <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">{{ $ticket->kendala }}</span>
+                            <span class="text-xs text-gray-800">{{ $ticket->tipe_komplain }}</span>
                         </div>
                     </td>
                     <td class="size-px whitespace-nowrap">
@@ -178,7 +175,7 @@
                                 (auth()->user()->role != 'user' && $ticket->status != 'SELESAI') ||
                                     (auth()->user()->role == 'user' && $ticket->status == 'MENUNGGU'))
                                 <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}"
-                                    onsubmit="return confirm('Apakah Anda Yakin?')" class="inline-flex items-center">
+                                    onclick="return confirm('Apakah Anda Yakin?')" class="inline-flex items-center">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
@@ -259,11 +256,27 @@
                             </div>
 
                             <div class="lg:col-span-2">
+                                <label for="complain-type" class="block text-sm font-medium mb-2">Complain Type</label>
+                                <select name="level" id="level"
+                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                    required>
+                                    <option value="" selected>-- Choose --</option>
+                                    @foreach ($komplain_tipe as $data)
+                                        <option value={{ $data->id }}>
+                                            {{ $data->tipe_komplain }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+
+                            <div class="lg:col-span-2">
                                 <label for="kendala" class="block text-sm font-medium mb-2">Kendala</label>
                                 <textarea id="kendala" name="kendala"
                                     class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                     rows="3" placeholder="Ketik kendalanya disini..." required></textarea>
                             </div>
+
                         </div>
                         <!-- End Content Modal -->
                     </div>

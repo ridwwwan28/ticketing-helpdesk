@@ -1,54 +1,97 @@
 @extends('layout')
+
 @section('konten')
     <!-- Header -->
-    <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200">
+    <div class="px-6 py-4 grid gap-3  md:justify-between md:items-center">
         <div>
             <h2 class="text-xl font-semibold text-gray-800">
                 Complain Type
             </h2>
             <p class="text-sm text-gray-600">
-                Tambah tipe komplain, ubah dan lainnya.
+                Klik Tambah untuk membuat tipe komplain.
             </p>
         </div>
+    </div>
 
-        <div>
-            <div class="inline-flex gap-x-2">
-                <a class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                    aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-backdrop-modal"
-                    data-hs-overlay="#hs-static-backdrop-modal" href="#">
-                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M5 12h14" />
-                        <path d="M12 5v14" />
-                    </svg>
-                    Tambah
-                </a>
-            </div>
+    <div class="px-6 py-3 md:border-b border-gray-200">
+        <div class="inline-flex gap-x-2">
+            <a class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-backdrop-modal"
+                data-hs-overlay="#hs-static-backdrop-modal" href="#">
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                </svg>
+                Tambah
+            </a>
         </div>
     </div>
+
     <!-- End Header -->
 
     <!-- Table -->
     <table class="min-w-full divide-y divide-gray-200">
-        <thead>
+        <thead class="bg-gray-50">
             <tr>
-                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">No</th>
-                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Type Complain
+                <th scope="col" class="ps-6 lg:ps-1 pe-6 py-3 text-start">
+                    <div class="flex items-center gap-x-2">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                            No
+                        </span>
+                    </div>
                 </th>
-                <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">
-                    Action</th>
+                <th scope="col" class="ps-6 lg:ps-1 pe-6 py-3 text-start">
+                    <div class="flex items-center gap-x-2">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                            Type Complain
+                        </span>
+                    </div>
+                </th>
+                <th scope="col" class="ps-6 lg:ps-1 pe-6 py-3 text-start">
+                    <div class="flex items-center gap-x-2">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                            Action
+                        </span>
+                    </div>
+                </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="divide-y divide-gray-200">
             @foreach ($complain_types as $no => $data)
                 <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 ">{{ $no + 1 }}
+                    <td class="size-px whitespace-nowrap">
+                        <div class="py-2 px-2">
+                            <span class="text-xs text-gray-800">{{ $no + 1 }}</span>
+                        </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 ">{{ $data->tipe_komplain }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                        <button type="button"
-                            class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-hidden focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Delete</button>
+                    <td class="size-px whitespace-nowrap">
+                        <div class="py-2 px-2">
+                            <span class="text-xs text-gray-800">{{ $data->tipe_komplain }}</span>
+                        </div>
+                    </td>
+                    <td class="size-px whitespace-nowrap">
+                        <div class="py-2 px-2">
+                            <form method="POST" action="{{ route('complaintype.destroy', $data->id) }}"
+                                onclick="return confirm('Apakah Anda Yakin?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="inline-flex items-center gap-x-1 text-xs font-medium bg-red-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
+                                        <path d="M3 6h18" />
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                        <line x1="10" x2="10" y1="11" y2="17" />
+                                        <line x1="14" x2="14" y1="11" y2="17" />
+                                    </svg>
+                                    HAPUS
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             @endforeach
@@ -79,133 +122,16 @@
                         </svg>
                     </button>
                 </div>
-                <form method="POST" action="{{ route('auth.submit') }}">
+                <form method="POST" action="{{ route('complaintype.submit') }}">
                     @csrf
                     <div class="p-4 overflow-y-auto">
                         <!-- Content Modal -->
                         <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label for="email" class="block text-sm font-medium mb-2">Email</label>
-                                <input type="email" id="email" name="email"
+                            <div class="md:col-span-2">
+                                <label for="compl-type" class="block text-sm font-medium mb-2">Complain Type</label>
+                                <input type="text" id="compl-type" name="complain_type"
                                     class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    required placeholder="test@example.com">
-                            </div>
-                            <div>
-                                <label for="password" class="block text-sm font-medium mb-2">Password</label>
-                                <input type="password" id="password" name="password"
-                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    required placeholder="Password">
-                            </div>
-                            <div>
-                                <label for="nama-user" class="block text-sm font-medium mb-2">Nama</label>
-                                <input type="text" id="nama-user" name="nama_user"
-                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    required placeholder="Nama">
-                            </div>
-                            <div>
-                                <label for="divisi" class="block text-sm font-medium mb-2">Divisi</label>
-                                <input type="text" id="divisi" name="divisi"
-                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    required placeholder="Divisi">
-                            </div>
-                            <div>
-                                <label for="level" class="block text-sm font-medium mb-2">Level</label>
-                                <select name="level" id="level"
-                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    required>
-                                    <option value="">-- Level --</option>
-                                    <option value=99>admin</option>
-                                    <option value=1>BOD</option>
-                                    <option value=2>Manager</option>
-                                    <option value=3>SPV/Staff</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="role" class="block text-sm font-medium mb-2">Role</label>
-                                <select name="role" id="role"
-                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    required>
-                                    <option value="">-- Role --</option>
-                                    <option value="superadmin">superadmin</option>
-                                    <option value="admin">admin</option>
-                                    <option value="user">user</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="grup" class="block text-sm font-medium mb-2">Grup</label>
-                                <select name="grup" id="grup"
-                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    required>
-                                    <option value="">-- Grup --</option>
-                                    <option value="DP">Danpac</option>
-                                    <option value="SMI">SMI</option>
-                                    <option value="SMID">SMID</option>
-                                    <option value="RTP">RTP</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="status" class="block text-sm font-medium mb-2">Status</label>
-                                <select name="status" id="status"
-                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    required>
-                                    <option value="">-- Status --</option>
-                                    <option value=1>AKTIF</option>
-                                    <option value=0>NON AKTIF</option>
-                                </select>
-                            </div>
-                            <div class="col-span-2">
-                                <div
-                                    data-hs-file-upload='{
-                                "url": "/upload",
-                                "acceptedFiles": "image/*",
-                                "maxFiles": 1,
-                                "singleton": true
-                              }'>
-                                    <template data-hs-file-upload-preview="">
-                                        <div class="size-20">
-                                            <img class="w-full object-contain rounded-full" data-dz-thumbnail="">
-                                        </div>
-                                    </template>
-
-                                    <div class="flex flex-wrap items-center gap-3 sm:gap-5">
-                                        <div class="group" data-hs-file-upload-previews=""
-                                            data-hs-file-upload-pseudo-trigger="">
-                                            <span
-                                                class="group-has-[div]:hidden flex shrink-0 justify-center items-center size-20 border-2 border-dotted border-gray-300 text-gray-400 cursor-pointer rounded-full hover:bg-gray-50">
-                                                <svg class="shrink-0 size-7" xmlns="http://www.w3.org/2000/svg"
-                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                    <circle cx="12" cy="10" r="3"></circle>
-                                                    <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"></path>
-                                                </svg>
-                                            </span>
-                                        </div>
-
-                                        <div class="grow">
-                                            <div class="flex items-center gap-x-2">
-                                                <button type="button"
-                                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                                                    data-hs-file-upload-trigger="">
-                                                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
-                                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round">
-                                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                                        <polyline points="17 8 12 3 7 8"></polyline>
-                                                        <line x1="12" x2="12" y1="3"
-                                                            y2="15"></line>
-                                                    </svg>
-                                                    Upload photo
-                                                </button>
-                                                <button type="button"
-                                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-gray-200 bg-white text-gray-500 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                                                    data-hs-file-upload-clear="">Delete</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    required placeholder="Complain Type">
                             </div>
                         </div>
                     </div>

@@ -222,7 +222,7 @@
 
                         @if (auth()->user()->role == 'superadmin')
                             <li class="hs-accordion" id="users-accordion">
-                                <a href="/complain_type"
+                                <a href="/complaintype"
                                     class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10">
                                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
