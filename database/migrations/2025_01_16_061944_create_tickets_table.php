@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('tipe_komplain', length: 100)->nullable();
             $table->text('kendala');
             $table->text('detail_penyelesaian')->nullable();
-            $table->timestamps();
-            $table->string('status', length: 10)->default('OPEN');
+            $table->string('ticket_status', length: 10)->default('OPEN');
             $table->dateTime('tgl_selesai')->nullable();
+            $table->timestamps();
         });
     }
 

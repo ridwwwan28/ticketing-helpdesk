@@ -22,7 +22,7 @@ class TicketFactory extends Factory
             'tipe_komplain' => fake()->randomDigitNotNull(),
             'kendala' => fake()->sentence(),
             'detail_penyelesaian' => fake()->sentence(),
-            'status' => fake()->randomElement($array = array('MENUNGGU', 'PROSES', 'SELESAI'))
+            'status' => fake()->randomElement($array = array('OPEN', 'IN PROCESS', 'CLOSED'))
         ];
     }
 }

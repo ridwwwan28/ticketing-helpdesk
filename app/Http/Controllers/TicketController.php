@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ComplainType;
 use App\Models\Ticket;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\ComplainType;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class TicketController extends Controller
 {
     function tampil(): View
     {
         // ambil semua ticket
-        $tickets = Ticket::paginate(10);
+        // $tickets = Ticket::paginate(10);
+        $tickets = DB::table('tickets')
+            ->join('users', 'tickets.username', '=', 'users.email')
+            ->join('complain_types', 'tickets.tipe_komplain', '=', 'complain_types.id')
+            ->select('tickets.*', 'users.name', 'complain_types.tipe_komplain')
+            ->paginate();
+
         $komplain_tipe = ComplainType::all();
 
         // tampilkan data ticket
@@ -43,11 +50,12 @@ class TicketController extends Controller
         $ticket = new Ticket();
         $ticket->no_tiket = $kodeTicket;
         $ticket->username = $request->email_user;
+        $ticket->tipe_komplain = $request->tipe_komplain;
         $ticket->kendala = $request->kendala;
-        $ticket->status = "OPEN";
+        $ticket->ticket_status = "OPEN";
         $ticket->save();
 
-        return redirect()->route('ticket.tampil')->with(['succes' => 'Data Berhasil Disimpan']);
+        return redirect()->route('ticket.tampil')->with(['success' => 'Data Berhasil Disimpan']);
     }
 
     public function show(string $id): View
@@ -77,10 +85,10 @@ class TicketController extends Controller
         // update ticket
         $ticket->tipe_komplain = $request->tipe_komplain;
         $ticket->detail_penyelesaian = $request->detail_penyelesaian;
-        $ticket->status = $request->status;
+        $ticket->ticket_status = $request->status;
         $ticket->update();
 
-        return redirect()->route('ticket.tampil')->with(['succes' => 'Data Berhasil Diubah']);
+        return redirect()->route('ticket.tampil')->with(['success' => 'Data Berhasil Diubah']);
     }
 
     public function destroy($id): RedirectResponse
@@ -91,6 +99,6 @@ class TicketController extends Controller
         // hapus ticket
         $ticket->delete();
 
-        return redirect()->route('ticket.tampil')->with(['succes' => 'Data Berhasil Dihapus']);
+        return redirect()->route('ticket.tampil')->with(['success' => 'Data Berhasil Dihapus']);
     }
 }

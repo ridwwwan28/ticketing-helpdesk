@@ -112,7 +112,7 @@
                     </td>
                     <td class="size-px whitespace-nowrap">
                         <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">{{ $ticket->username }}</span>
+                            <span class="text-xs text-gray-800">{{ $ticket->name }}</span>
                         </div>
                     </td>
                     <td class="size-px whitespace-nowrap">
@@ -137,7 +137,7 @@
                     <td class="size-px whitespace-nowrap">
                         <div class="py-2 px-2">
                             <span class="text-xs text-gray-800">
-                                {{ $ticket->status }}
+                                {{ $ticket->ticket_status }}
                             </span>
                         </div>
                     </td>
@@ -172,8 +172,8 @@
                             @endif
 
                             @if (
-                                (auth()->user()->role != 'user' && $ticket->status != 'SELESAI') ||
-                                    (auth()->user()->role == 'user' && $ticket->status == 'MENUNGGU'))
+                                (auth()->user()->role != 'user' && $ticket->ticket_status != 'CLOSED') ||
+                                    (auth()->user()->role == 'user' && $ticket->ticket_status == 'OPEN'))
                                 <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}"
                                     onclick="return confirm('Apakah Anda Yakin?')" class="inline-flex items-center">
                                     @csrf
@@ -257,7 +257,7 @@
 
                             <div class="lg:col-span-2">
                                 <label for="complain-type" class="block text-sm font-medium mb-2">Complain Type</label>
-                                <select name="level" id="level"
+                                <select name="tipe_komplain" id="complain-type"
                                     class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                     required>
                                     <option value="" selected>-- Choose --</option>

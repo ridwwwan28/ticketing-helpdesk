@@ -53,14 +53,14 @@
                     <select name="status" id="status"
                         class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                         <option value="">-- CHOOSE STATUS --</option>
-                        <option value="OPEN" @if ($ticket->status == 'OPEN') @selected(true) @endif>
-                            RECEIVED
+                        <option value="OPEN" @if ($ticket->ticket_status == 'OPEN') @selected(true) @endif>
+                            OPEN
                         </option>
-                        <option value="IN PROCESS" @if ($ticket->status == 'IN PROCESS') @selected(true) @endif>
+                        <option value="IN PROCESS" @if ($ticket->ticket_status == 'IN PROCESS') @selected(true) @endif>
                             IN PROCESS
                         </option>
-                        <option value="CLOSED" @if ($ticket->status == 'CLOSED') @selected(true) @endif>
-                            DONE
+                        <option value="CLOSED" @if ($ticket->ticket_status == 'CLOSED') @selected(true) @endif>
+                            CLOSED
                         </option>
                     </select>
                 </div>
