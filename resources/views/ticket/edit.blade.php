@@ -74,7 +74,7 @@
                     <label for="tgl-selesai" class="block text-sm font-medium mb-2">Finished Date</label>
                     <input type="text" id="tgl-selesai" name="tgl_selesai"
                         class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                        value="{{ old('tgl_selesai', $ticket->tgl_selesai) }}">
+                        value="{{ old('tgl_selesai', $ticket->tgl_selesai) }}" disabled>
                 </div>
             </div>
             <!-- End Content Modal -->

@@ -86,6 +86,12 @@ class TicketController extends Controller
         $ticket->tipe_komplain = $request->tipe_komplain;
         $ticket->detail_penyelesaian = $request->detail_penyelesaian;
         $ticket->ticket_status = $request->status;
+        if ($ticket->ticket_status === 'CLOSED') {
+            $ticket->tgl_selesai = date('Y-m-d H:i:s');
+        } else {
+            $ticket->tgl_selesai = null;
+        }
+
         $ticket->update();
 
         return redirect()->route('ticket.tampil')->with(['success' => 'Data Berhasil Diubah']);

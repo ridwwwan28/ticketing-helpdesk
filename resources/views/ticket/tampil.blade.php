@@ -130,7 +130,7 @@
                     <td class="size-px whitespace-nowrap">
                         <div class="py-2 px-2">
                             <span class="text-xs text-gray-800">
-                                {{ $ticket->updated_at }}
+                                {{ $ticket->tgl_selesai }}
                             </span>
                         </div>
                     </td>
