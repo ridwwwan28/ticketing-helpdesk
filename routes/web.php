@@ -9,9 +9,10 @@ use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
-
-Route::get('/', fn() => view('auth.login'))->name('login');
-Route::post('/', [AuthController::class, 'login']);
+Route::middleware('guest')->group(function () {
+    Route::get('/', fn() => view('auth.login'))->name('login');
+    Route::post('/', [AuthController::class, 'login']);
+});
 
 
 

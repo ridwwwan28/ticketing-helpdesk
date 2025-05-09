@@ -51,7 +51,7 @@ class AuthController extends Controller
         $user->status = $request->status;
         $user->save();
 
-        return redirect()->route('auth.users');
+        return redirect()->route('auth.users')->with(['success' => 'Data Berhasil Disimpan']);
     }
 
     function edit(string $id): View

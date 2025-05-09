@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DataAddedNotification;
 use App\Models\Ticket;
 use Illuminate\View\View;
 use App\Models\ComplainType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
 class TicketController extends Controller
@@ -19,8 +21,8 @@ class TicketController extends Controller
         $tickets = DB::table('tickets')
             ->join('users', 'tickets.username', '=', 'users.email')
             ->join('complain_types', 'tickets.tipe_komplain', '=', 'complain_types.id')
-            ->select('tickets.*', 'users.name', 'complain_types.tipe_komplain')
-            ->paginate();
+            ->select('tickets.*', 'users.name', 'users.email', 'users.role', 'complain_types.tipe_komplain')
+            ->paginate(10);
 
         $komplain_tipe = ComplainType::all();
 
@@ -54,6 +56,14 @@ class TicketController extends Controller
         $ticket->kendala = $request->kendala;
         $ticket->ticket_status = "OPEN";
         $ticket->save();
+
+        // Kirim email notifikasi
+        $data = [
+            'subject' => 'Ticket Baru',
+            'title' => 'Nomor Ticket ' . $ticket->no_tiket,
+            'body' => 'Ada ticket baru dengan nomor ' . $ticket->no_tiket . ' yang dibuat oleh ' . $ticket->username
+        ];
+        Mail::to('firmansyah@danpacpharma.com')->send(new DataAddedNotification($data));
 
         return redirect()->route('ticket.tampil')->with(['success' => 'Data Berhasil Disimpan']);
     }
