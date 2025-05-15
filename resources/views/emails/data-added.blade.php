@@ -10,9 +10,12 @@
 
 <body>
     <h2>{{ $data['title'] }}</h2>
-    <p>{{ $data['body'] }}
-        {{-- dengan nomor : <strong>{{ $ticket->no_tiket }}</strong>, yang dibuat oleh
-        <strong>{{ $ticket->username }}</strong>, Harap segera di respon --}}
+    <p>
+        {{ $data['body1'] }}<br>
+        {{ $data['body2'] }}<br>
+        {{ $data['body3'] }}<br>
+        {{ $data['body4'] }}
+
     </p>
 </body>
 

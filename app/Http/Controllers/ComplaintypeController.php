@@ -23,7 +23,7 @@ class ComplaintypeController extends Controller
         $compl_type->tipe_komplain = $request->complain_type;
         $compl_type->save();
 
-        return redirect()->route('complaintype.list');
+        return redirect()->route('complaintype.list')->with(['success' => 'Data Berhasil Disimpan']);
     }
 
     public function destroy($id): RedirectResponse
@@ -34,6 +34,6 @@ class ComplaintypeController extends Controller
         // hapus data
         $compl_type->delete();
 
-        return redirect()->route('complaintype.list')->with(['succes' => 'Data Berhasil Dihapus']);
+        return redirect()->route('complaintype.list')->with(['success' => 'Data Berhasil Dihapus']);
     }
 }

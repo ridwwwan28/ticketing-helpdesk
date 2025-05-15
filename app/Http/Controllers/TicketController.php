@@ -34,7 +34,7 @@ class TicketController extends Controller
     {
         // ambil record ticket yg terakhir
         $ambilTicket = Ticket::latest()->first();
-        $kodeDepan = "HD";
+        $kodeDepan = "DP";
         $kodeTahun = date('Y');
         $kodeBulan = date('m');
 
@@ -43,11 +43,11 @@ class TicketController extends Controller
             $nomorUrut = "0001";
         } else {
             // kode berikutnya
-            $nomorUrut = substr($ambilTicket->no_tiket, 8, 4) + 1;
+            $nomorUrut = substr($ambilTicket->no_tiket, 9, 4) + 1;
 
             $nomorUrut = str_pad($nomorUrut, 4, "0", STR_PAD_LEFT);
         }
-        $kodeTicket = $kodeDepan . $kodeTahun . $kodeBulan . $nomorUrut;
+        $kodeTicket = $kodeDepan . '-' . $kodeTahun . $kodeBulan . $nomorUrut;
 
         $ticket = new Ticket();
         $ticket->no_tiket = $kodeTicket;
@@ -59,11 +59,14 @@ class TicketController extends Controller
 
         // Kirim email notifikasi
         $data = [
-            'subject' => 'Ticket Baru',
+            'subject' => '[TICKET ' . $ticket->no_tiket . ']',
             'title' => 'Nomor Ticket ' . $ticket->no_tiket,
-            'body' => 'Ada ticket baru dengan nomor ' . $ticket->no_tiket . ' yang dibuat oleh ' . $ticket->username
+            'body1' => 'Ticket ID : ' . $ticket->no_tiket,
+            'body2' => ' From : ' . $ticket->username,
+            'body3' => 'Complain Type : ' . $ticket->tipe_komplain,
+            'body4' => 'Problem : ' . $ticket->kendala
         ];
-        Mail::to('firmansyah@danpacpharma.com')->send(new DataAddedNotification($data));
+        Mail::to($ticket->username)->send(new DataAddedNotification($data));
 
         return redirect()->route('ticket.tampil')->with(['success' => 'Data Berhasil Disimpan']);
     }
