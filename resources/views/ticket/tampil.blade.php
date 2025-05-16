@@ -42,7 +42,7 @@
                 <th scope="col" class="px-6 py-3 text-start">
                     <div class="flex items-center gap-x-2">
                         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                            No Ticket
+                            No. Ticket
                         </span>
                     </div>
                 </th>
@@ -50,7 +50,7 @@
                 <th scope="col" class="px-6 py-3 text-start">
                     <div class="flex items-center gap-x-2">
                         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                            Nama
+                            Pengguna
                         </span>
                     </div>
                 </th>
@@ -58,7 +58,7 @@
                 <th scope="col" class="px-6 py-3 text-start">
                     <div class="flex items-center gap-x-2">
                         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                            Type Komplain
+                            Kategori Kendala
                         </span>
                     </div>
                 </th>
@@ -66,7 +66,15 @@
                 <th scope="col" class="px-6 py-3 text-start">
                     <div class="flex items-center gap-x-2">
                         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                            Tgl Buat
+                            Tgl Terbit Ticket
+                        </span>
+                    </div>
+                </th>
+
+                <th scope="col" class="px-6 py-3 text-start">
+                    <div class="flex items-center gap-x-2">
+                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                            Estimasi Waktu Penyelesaian
                         </span>
                     </div>
                 </th>
@@ -90,7 +98,7 @@
                 <th scope="col" class="px-6 py-3 text-end">
                     <div class="flex items-center gap-x-2">
                         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                            Action
+                            Tindakan
                         </span>
                     </div>
                 </th>
@@ -124,6 +132,13 @@
                         <div class="py-2 px-2">
                             <span class="text-xs text-gray-800">
                                 {{ $ticket->created_at }}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="size-px whitespace-nowrap">
+                        <div class="py-2 px-2">
+                            <span class="text-xs text-gray-800">
+
                             </span>
                         </div>
                     </td>
@@ -171,9 +186,7 @@
                                 </a>
                             @endif
 
-                            @if (
-                                (auth()->user()->role != 'user' && $ticket->ticket_status != 'CLOSED') ||
-                                    (auth()->user()->role == 'user' && $ticket->ticket_status == 'OPEN'))
+                            @if (auth()->user()->role != 'user' && $ticket->ticket_status != 'CLOSED')
                                 <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}"
                                     onclick="return confirm('Apakah Anda Yakin?')" class="inline-flex items-center">
                                     @csrf
@@ -256,7 +269,8 @@
                             </div>
 
                             <div class="lg:col-span-2">
-                                <label for="complain-type" class="block text-sm font-medium mb-2">Complain Type</label>
+                                <label for="complain-type" class="block text-sm font-medium mb-2">Klasifikasi
+                                    Kendala</label>
                                 <select name="tipe_komplain" id="complain-type"
                                     class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                     required>

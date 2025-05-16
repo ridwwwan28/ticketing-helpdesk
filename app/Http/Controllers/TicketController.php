@@ -22,6 +22,7 @@ class TicketController extends Controller
             ->join('users', 'tickets.username', '=', 'users.email')
             ->join('complain_types', 'tickets.tipe_komplain', '=', 'complain_types.id')
             ->select('tickets.*', 'users.name', 'users.email', 'users.role', 'complain_types.tipe_komplain')
+            ->orderBy('level')
             ->paginate(10);
 
         $komplain_tipe = ComplainType::all();
@@ -61,10 +62,10 @@ class TicketController extends Controller
         $data = [
             'subject' => '[TICKET ' . $ticket->no_tiket . ']',
             'title' => 'Nomor Ticket ' . $ticket->no_tiket,
-            'body1' => 'Ticket ID : ' . $ticket->no_tiket,
-            'body2' => ' From : ' . $ticket->username,
-            'body3' => 'Complain Type : ' . $ticket->tipe_komplain,
-            'body4' => 'Problem : ' . $ticket->kendala
+            'body1' => 'No. Ticket : ' . $ticket->no_tiket,
+            'body2' => ' Dari : ' . $ticket->username,
+            'body3' => 'Kategori Kendala : ' . $ticket->tipe_komplain,
+            'body4' => 'Kendala : ' . $ticket->kendala
         ];
         Mail::to($ticket->username)->send(new DataAddedNotification($data));
 
