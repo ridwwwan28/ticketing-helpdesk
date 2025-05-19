@@ -17,15 +17,19 @@ class ComplaintypeSeeder extends Seeder
         DB::table('complain_types')->truncate();
 
         ComplainType::create([
-            'tipe_komplain' => 'Hardware'
+            'tipe_komplain' => 'Perangkat Keras (Hardware)'
         ]);
 
         ComplainType::create([
-            'tipe_komplain' => 'Software'
+            'tipe_komplain' => 'Jaringan & Internet'
         ]);
 
         ComplainType::create([
-            'tipe_komplain' => 'Jaringan'
+            'tipe_komplain' => 'Aplikasi / Software'
+        ]);
+
+        ComplainType::create([
+            'tipe_komplain' => 'Akun & Akses'
         ]);
 
         ComplainType::create([
@@ -33,23 +37,23 @@ class ComplaintypeSeeder extends Seeder
         ]);
 
         ComplainType::create([
-            'tipe_komplain' => 'Akses & Login'
-        ]);
-
-        ComplainType::create([
-            'tipe_komplain' => 'Sistem Internal & Aplikasi Bisnis'
-        ]);
-
-        ComplainType::create([
-            'tipe_komplain' => 'Peripheral & Device Support'
-        ]);
-
-        ComplainType::create([
             'tipe_komplain' => 'Permintaan Umum'
         ]);
 
         ComplainType::create([
-            'tipe_komplain' => 'Keamanan IT'
+            'tipe_komplain' => 'HRIS / Talenta'
+        ]);
+
+        ComplainType::create([
+            'tipe_komplain' => 'Printer Label / Barcode'
+        ]);
+
+        ComplainType::create([
+            'tipe_komplain' => 'Keamanan & Akses'
+        ]);
+
+        ComplainType::create([
+            'tipe_komplain' => 'Lain-lain'
         ]);
     }
 }

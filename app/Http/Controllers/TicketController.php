@@ -102,8 +102,10 @@ class TicketController extends Controller
         $ticket->ticket_status = $request->status;
         if ($ticket->ticket_status === 'CLOSED') {
             $ticket->tgl_selesai = date('Y-m-d H:i:s');
-        } else {
-            $ticket->tgl_selesai = null;
+        }
+
+        if ($ticket->status === 'IN PROCESS' && $ticket->prioritas === 1) {
+            $ticket->tgl_estimasi = $ticket->created_at->copy()->addDays(1);
         }
 
         $ticket->update();

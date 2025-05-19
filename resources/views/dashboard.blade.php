@@ -332,7 +332,7 @@
                             </p>
                             <div class="mt-1 flex items-center gap-x-2">
                                 <h3 class="mt-1 text-xl font-medium text-gray-800">
-                                    92,913
+                                    {{ $tickets->count() }}
                                 </h3>
                             </div>
                         </div>

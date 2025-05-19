@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('kendala');
             $table->text('detail_penyelesaian')->nullable();
             $table->string('ticket_status', length: 10)->default('OPEN');
+            $table->dateTime('tgl_estimasi')->nullable();
             $table->dateTime('tgl_selesai')->nullable();
             $table->timestamps();
         });

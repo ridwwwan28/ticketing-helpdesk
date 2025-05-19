@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Firmansyah',
-            'email' => 'firman@danpacpharma.com',
+            'email' => 'firmanyah@danpacpharma.com',
             'password' => Hash::make('123456'),
             'divisi' => 'IT',
             'group' => 'DP',
