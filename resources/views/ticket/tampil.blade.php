@@ -131,14 +131,14 @@
                     <td class="size-px whitespace-nowrap">
                         <div class="py-2 px-2">
                             <span class="text-xs text-gray-800">
-                                {{ $ticket->created_at }}
+                                {{ $ticket->tgl_buat }}
                             </span>
                         </div>
                     </td>
                     <td class="size-px whitespace-nowrap">
                         <div class="py-2 px-2">
                             <span class="text-xs text-gray-800">
-
+                                {{ $ticket->tgl_estimasi }}
                             </span>
                         </div>
                     </td>

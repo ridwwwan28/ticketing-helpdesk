@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Carbon;
 
 class TicketController extends Controller
 {
@@ -55,6 +56,7 @@ class TicketController extends Controller
         $ticket->username = $request->email_user;
         $ticket->tipe_komplain = $request->tipe_komplain;
         $ticket->kendala = $request->kendala;
+        $ticket->tgl_buat = date('Y-m-d H:i:s');
         $ticket->ticket_status = "OPEN";
         $ticket->save();
 
@@ -67,6 +69,8 @@ class TicketController extends Controller
             'body3' => 'Kategori Kendala : ' . $ticket->tipe_komplain,
             'body4' => 'Kendala : ' . $ticket->kendala
         ];
+
+        // kirim ke email tujuan
         Mail::to($ticket->username)->send(new DataAddedNotification($data));
 
         return redirect()->route('ticket.tampil')->with(['success' => 'Data Berhasil Disimpan']);
@@ -76,9 +80,10 @@ class TicketController extends Controller
     {
         // ambil ticket berdasarkan id
         $ticket = Ticket::findOrFail($id);
+        $komplain_tipe = ComplainType::all();
 
         // dikirim ke view
-        return view('ticket.show', compact('ticket'));
+        return view('ticket.show', compact('ticket'), compact('komplain_tipe'));
     }
 
     public function edit(string $id): View
@@ -99,15 +104,26 @@ class TicketController extends Controller
         // update ticket
         $ticket->tipe_komplain = $request->tipe_komplain;
         $ticket->detail_penyelesaian = $request->detail_penyelesaian;
+        $ticket->prioritas = $request->prioritas;
         $ticket->ticket_status = $request->status;
+
+        // isi tgl selesai
         if ($ticket->ticket_status === 'CLOSED') {
             $ticket->tgl_selesai = date('Y-m-d H:i:s');
         }
 
-        if ($ticket->status === 'IN PROCESS' && $ticket->prioritas === 1) {
-            $ticket->tgl_estimasi = $ticket->created_at->copy()->addDays(1);
+        // isi tgl estimasi sesuai dari prioritas yang dipilih
+        if ($ticket->ticket_status === 'IN PROCESS' && $ticket->prioritas === '1') {
+            $ticket->tgl_estimasi = Carbon::parse($ticket->tgl_buat)->addDays(1);
+        } elseif ($ticket->ticket_status === 'IN PROCESS' && $ticket->prioritas === '2') {
+            $ticket->tgl_estimasi = Carbon::parse($ticket->tgl_buat)->addDays(2);
+        } elseif ($ticket->ticket_status === 'IN PROCESS' && $ticket->prioritas === '3') {
+            $ticket->tgl_estimasi = Carbon::parse($ticket->tgl_buat)->addDays(3);
+        } elseif ($ticket->ticket_status === 'IN PROCESS' && $ticket->prioritas === '4') {
+            $ticket->tgl_estimasi = Carbon::parse($ticket->tgl_buat)->addDays(4);
         }
 
+        // update data ticket
         $ticket->update();
 
         return redirect()->route('ticket.tampil')->with(['success' => 'Data Berhasil Diubah']);

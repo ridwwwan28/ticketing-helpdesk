@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'level' => 99,
             'role' => 'superadmin',
             'status' => 1,
-            'profile_pic' => fake()->md5(),
+            'profile_pic' => Str::random(10),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10)
         ]);
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             'level' => 99,
             'role' => 'superadmin',
             'status' => 1,
-            'profile_pic' => fake()->md5(),
+            'profile_pic' => Str::random(10),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10)
         ]);
@@ -57,7 +57,7 @@ class UserSeeder extends Seeder
             'level' => 1,
             'role' => 'user',
             'status' => 1,
-            'profile_pic' => fake()->md5(),
+            'profile_pic' => Str::random(10),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10)
         ]);
@@ -71,7 +71,7 @@ class UserSeeder extends Seeder
             'level' => 2,
             'role' => 'admin',
             'status' => 1,
-            'profile_pic' => fake()->md5(),
+            'profile_pic' => Str::random(10),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10)
         ]);
@@ -85,7 +85,7 @@ class UserSeeder extends Seeder
             'level' => 3,
             'role' => 'user',
             'status' => 1,
-            'profile_pic' => fake()->md5(),
+            'profile_pic' => Str::random(10),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10)
         ]);
@@ -98,7 +98,7 @@ class UserSeeder extends Seeder
             'level' => 3,
             'role' => 'user',
             'status' => 1,
-            'profile_pic' => fake()->md5(),
+            'profile_pic' => Str::random(10),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10)
         ]);
@@ -111,7 +111,20 @@ class UserSeeder extends Seeder
             'level' => 3,
             'role' => 'user',
             'status' => 1,
-            'profile_pic' => fake()->md5(),
+            'profile_pic' => Str::random(10),
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10)
+        ]);
+        User::create([
+            'name' => 'User Test',
+            'email' => 'usertest@danpacpharma.com',
+            'password' => Hash::make('123456'),
+            'divisi' => 'IT',
+            'group' => 'DP',
+            'level' => 3,
+            'role' => 'user',
+            'status' => 1,
+            'profile_pic' => Str::random(10),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10)
         ]);

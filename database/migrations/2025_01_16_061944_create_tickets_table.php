@@ -17,10 +17,12 @@ return new class extends Migration
             $table->string('username');
             $table->string('tipe_komplain', length: 100)->nullable();
             $table->text('kendala');
+            $table->integer('prioritas')->nullable();
             $table->text('detail_penyelesaian')->nullable();
-            $table->string('ticket_status', length: 10)->default('OPEN');
+            $table->dateTime('tgl_buat')->nullable();
             $table->dateTime('tgl_estimasi')->nullable();
             $table->dateTime('tgl_selesai')->nullable();
+            $table->string('ticket_status', length: 10)->default('OPEN');
             $table->timestamps();
         });
     }
