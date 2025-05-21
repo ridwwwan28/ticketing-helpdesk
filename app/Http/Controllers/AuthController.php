@@ -77,6 +77,6 @@ class AuthController extends Controller
         $user->update();
 
         // kembali ke halaman tampil data
-        return redirect()->route('auth.users');
+        return redirect()->route('auth.users')->with(['success' => 'Data Berhasil Diubah']);
     }
 }

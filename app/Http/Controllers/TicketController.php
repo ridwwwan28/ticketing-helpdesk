@@ -6,6 +6,7 @@ use App\Mail\DataAddedNotification;
 use App\Models\Ticket;
 use Illuminate\View\View;
 use App\Models\ComplainType;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
@@ -18,7 +19,6 @@ class TicketController extends Controller
     function tampil(): View
     {
         // ambil semua ticket
-        // $tickets = Ticket::paginate(10);
         $tickets = DB::table('tickets')
             ->join('users', 'tickets.username', '=', 'users.email')
             ->join('complain_types', 'tickets.tipe_komplain', '=', 'complain_types.id')

@@ -107,109 +107,223 @@
 
         <tbody class="divide-y divide-gray-200">
             @foreach ($tickets as $no => $ticket)
-                <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
-                    <td class="size-px whitespace-nowrap">
-                        <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">{{ $no + 1 }}</span>
-                        </div>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                        <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">{{ $ticket->no_tiket }}</span>
-                        </div>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                        <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">{{ $ticket->name }}</span>
-                        </div>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                        <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">{{ $ticket->tipe_komplain }}</span>
-                        </div>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                        <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">
-                                {{ $ticket->tgl_buat }}
-                            </span>
-                        </div>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                        <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">
-                                {{ $ticket->tgl_estimasi }}
-                            </span>
-                        </div>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                        <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">
-                                {{ $ticket->tgl_selesai }}
-                            </span>
-                        </div>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                        <div class="py-2 px-2">
-                            <span class="text-xs text-gray-800">
-                                {{ $ticket->ticket_status }}
-                            </span>
-                        </div>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                        <div class="py-2 px-2">
-                            <a href="{{ route('ticket.show', $ticket->id) }}"
-                                class="inline-flex items-center gap-x-1 text-xs font-medium bg-blue-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-list">
-                                    <path d="M3 12h.01" />
-                                    <path d="M3 18h.01" />
-                                    <path d="M3 6h.01" />
-                                    <path d="M8 12h13" />
-                                    <path d="M8 18h13" />
-                                    <path d="M8 6h13" />
-                                </svg>
-                                TAMPIL
-                            </a>
-                            @if (auth()->user()->role != 'user')
-                                <a href="{{ route('ticket.edit', $ticket->id) }}"
-                                    class="inline-flex items-center gap-x-1 text-xs font-medium bg-orange-400 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-orange-500 focus:outline-none focus:bg-orange-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">
-                                        <path
-                                            d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                                        <path d="m15 5 4 4" />
-                                    </svg>
-                                    EDIT
-                                </a>
-                            @endif
-
-                            @if (auth()->user()->role != 'user' && $ticket->ticket_status != 'CLOSED')
-                                <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}"
-                                    onclick="return confirm('Apakah Anda Yakin?')" class="inline-flex items-center">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="inline-flex items-center gap-x-1 text-xs font-medium bg-red-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                {{-- jika login role user, maka ticket yang muncul hanya sesuai ticket yang login --}}
+                @if (auth()->user()->role == 'user')
+                    @if (auth()->user()->email == $ticket->username)
+                        <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
+                            <td class="size-px whitespace-nowrap">
+                                <div class="py-2 px-2">
+                                    <span class="text-xs text-gray-800">{{ $no + 1 }}</span>
+                                </div>
+                            </td>
+                            <td class="size-px whitespace-nowrap">
+                                <div class="py-2 px-2">
+                                    <span class="text-xs text-gray-800">{{ $ticket->no_tiket }}</span>
+                                </div>
+                            </td>
+                            <td class="size-px whitespace-nowrap">
+                                <div class="py-2 px-2">
+                                    <span class="text-xs text-gray-800">{{ $ticket->name }}</span>
+                                </div>
+                            </td>
+                            <td class="size-px whitespace-nowrap">
+                                <div class="py-2 px-2">
+                                    <span class="text-xs text-gray-800">{{ $ticket->tipe_komplain }}</span>
+                                </div>
+                            </td>
+                            <td class="size-px whitespace-nowrap">
+                                <div class="py-2 px-2">
+                                    <span class="text-xs text-gray-800">
+                                        {{ $ticket->tgl_buat }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="size-px whitespace-nowrap">
+                                <div class="py-2 px-2">
+                                    <span class="text-xs text-gray-800">
+                                        {{ $ticket->tgl_estimasi }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="size-px whitespace-nowrap">
+                                <div class="py-2 px-2">
+                                    <span class="text-xs text-gray-800">
+                                        {{ $ticket->tgl_selesai }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="size-px whitespace-nowrap">
+                                <div class="py-2 px-2">
+                                    <span class="text-xs text-gray-800">
+                                        {{ $ticket->ticket_status }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="size-px whitespace-nowrap">
+                                <div class="py-2 px-2">
+                                    <a href="{{ route('ticket.show', $ticket->id) }}"
+                                        class="inline-flex items-center gap-x-1 text-xs font-medium bg-blue-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
-                                            <path d="M3 6h18" />
-                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                                            <line x1="10" x2="10" y1="11" y2="17" />
-                                            <line x1="14" x2="14" y1="11" y2="17" />
+                                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list">
+                                            <path d="M3 12h.01" />
+                                            <path d="M3 18h.01" />
+                                            <path d="M3 6h.01" />
+                                            <path d="M8 12h13" />
+                                            <path d="M8 18h13" />
+                                            <path d="M8 6h13" />
                                         </svg>
-                                        HAPUS
-                                    </button>
-                                </form>
-                            @endif
-                        </div>
+                                        TAMPIL
+                                    </a>
+                                    @if (auth()->user()->role != 'user')
+                                        <a href="{{ route('ticket.edit', $ticket->id) }}"
+                                            class="inline-flex items-center gap-x-1 text-xs font-medium bg-orange-400 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-orange-500 focus:outline-none focus:bg-orange-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-pencil">
+                                                <path
+                                                    d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                                                <path d="m15 5 4 4" />
+                                            </svg>
+                                            EDIT
+                                        </a>
+                                    @endif
 
-                    </td>
-                </tr>
+                                    @if (auth()->user()->role != 'user' && $ticket->ticket_status != 'CLOSED')
+                                        <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}"
+                                            onclick="return confirm('Apakah Anda Yakin?')"
+                                            class="inline-flex items-center">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="inline-flex items-center gap-x-1 text-xs font-medium bg-red-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="lucide lucide-trash-2">
+                                                    <path d="M3 6h18" />
+                                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                                    <line x1="10" x2="10" y1="11" y2="17" />
+                                                    <line x1="14" x2="14" y1="11" y2="17" />
+                                                </svg>
+                                                HAPUS
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+
+                            </td>
+                        </tr>
+                    @endif
+
+                    {{-- untuk role admin dan superadmin, muncul semua ticket --}}
+                @else
+                    <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
+                        <td class="size-px whitespace-nowrap">
+                            <div class="py-2 px-2">
+                                <span class="text-xs text-gray-800">{{ $no + 1 }}</span>
+                            </div>
+                        </td>
+                        <td class="size-px whitespace-nowrap">
+                            <div class="py-2 px-2">
+                                <span class="text-xs text-gray-800">{{ $ticket->no_tiket }}</span>
+                            </div>
+                        </td>
+                        <td class="size-px whitespace-nowrap">
+                            <div class="py-2 px-2">
+                                <span class="text-xs text-gray-800">{{ $ticket->name }}</span>
+                            </div>
+                        </td>
+                        <td class="size-px whitespace-nowrap">
+                            <div class="py-2 px-2">
+                                <span class="text-xs text-gray-800">{{ $ticket->tipe_komplain }}</span>
+                            </div>
+                        </td>
+                        <td class="size-px whitespace-nowrap">
+                            <div class="py-2 px-2">
+                                <span class="text-xs text-gray-800">
+                                    {{ $ticket->tgl_buat }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="size-px whitespace-nowrap">
+                            <div class="py-2 px-2">
+                                <span class="text-xs text-gray-800">
+                                    {{ $ticket->tgl_estimasi }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="size-px whitespace-nowrap">
+                            <div class="py-2 px-2">
+                                <span class="text-xs text-gray-800">
+                                    {{ $ticket->tgl_selesai }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="size-px whitespace-nowrap">
+                            <div class="py-2 px-2">
+                                <span class="text-xs text-gray-800">
+                                    {{ $ticket->ticket_status }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="size-px whitespace-nowrap">
+                            <div class="py-2 px-2">
+                                <a href="{{ route('ticket.show', $ticket->id) }}"
+                                    class="inline-flex items-center gap-x-1 text-xs font-medium bg-blue-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list">
+                                        <path d="M3 12h.01" />
+                                        <path d="M3 18h.01" />
+                                        <path d="M3 6h.01" />
+                                        <path d="M8 12h13" />
+                                        <path d="M8 18h13" />
+                                        <path d="M8 6h13" />
+                                    </svg>
+                                    TAMPIL
+                                </a>
+                                @if (auth()->user()->role != 'user')
+                                    <a href="{{ route('ticket.edit', $ticket->id) }}"
+                                        class="inline-flex items-center gap-x-1 text-xs font-medium bg-orange-400 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-orange-500 focus:outline-none focus:bg-orange-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">
+                                            <path
+                                                d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                                            <path d="m15 5 4 4" />
+                                        </svg>
+                                        EDIT
+                                    </a>
+                                @endif
+
+                                @if (auth()->user()->role != 'user' && $ticket->ticket_status != 'CLOSED')
+                                    <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}"
+                                        onclick="return confirm('Apakah Anda Yakin?')" class="inline-flex items-center">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="inline-flex items-center gap-x-1 text-xs font-medium bg-red-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-trash-2">
+                                                <path d="M3 6h18" />
+                                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                                <line x1="10" x2="10" y1="11" y2="17" />
+                                                <line x1="14" x2="14" y1="11" y2="17" />
+                                            </svg>
+                                            HAPUS
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                @endif
             @endforeach
 
         </tbody>
