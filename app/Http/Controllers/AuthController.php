@@ -79,4 +79,13 @@ class AuthController extends Controller
         // kembali ke halaman tampil data
         return redirect()->route('auth.users')->with(['success' => 'Data Berhasil Diubah']);
     }
+
+    public function destroy($id): RedirectResponse
+    {
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return redirect()->route('auth.users')->with(['success' => 'Data Berhasil Dihapus']);
+    }
 }

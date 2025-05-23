@@ -62,10 +62,10 @@ class TicketController extends Controller
 
         // Kirim email notifikasi
         $data = [
-            'subject' => '[TICKET ' . $ticket->no_tiket . ']',
+            'subject' => '[' . $ticket->no_tiket . ']',
             'title' => 'Nomor Ticket ' . $ticket->no_tiket,
             'body1' => 'No. Ticket : ' . $ticket->no_tiket,
-            'body2' => ' Dari : ' . $ticket->username,
+            'body2' => ' Dari : ' . $request->nama_user,
             'body3' => 'Kategori Kendala : ' . $ticket->tipe_komplain,
             'body4' => 'Kendala : ' . $ticket->kendala
         ];
@@ -79,11 +79,18 @@ class TicketController extends Controller
     public function show(string $id): View
     {
         // ambil ticket berdasarkan id
-        $ticket = Ticket::findOrFail($id);
-        $komplain_tipe = ComplainType::all();
+        // $ticket = Ticket::findOrFail($id);
+
+
+        $ticket = DB::table('tickets')
+            ->join('users', 'tickets.username', '=', 'users.email')
+            ->join('complain_types', 'tickets.tipe_komplain', '=', 'complain_types.id')
+            ->where('tickets.id', '=', $id)
+            ->select('tickets.*', 'users.name', 'users.email', 'users.role', 'complain_types.tipe_komplain')
+            ->first();
 
         // dikirim ke view
-        return view('ticket.show', compact('ticket'), compact('komplain_tipe'));
+        return view('ticket.show', compact('ticket'));
     }
 
     public function edit(string $id): View

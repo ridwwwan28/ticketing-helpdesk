@@ -15,6 +15,8 @@
         }
     </style>
     <title>DANPAC TICKET</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}" type="image/png">
 </head>
 
 <body class="bg-gray-200">

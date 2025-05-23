@@ -112,7 +112,7 @@
                     </td>
                     <td class="size-px whitespace-nowrap">
                         <div class="px-6 py-3">
-                            @if ($user->status === 1)
+                            @if ($user->status == '1')
                                 <span
                                     class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full">
                                     <svg class="size-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -159,12 +159,12 @@
                                 EDIT
                             </a>
 
-                            <form method="POST" action="" class="inline-flex items-center">
+                            <form method="POST" action="{{ route('auth.destroy', $user->id) }}"
+                                class="inline-flex items-center">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    class="inline-flex items-center gap-x-1 text-xs font-medium bg-red-600 rounded-lg py-1 px-1.5 text-black decoration-2 hover:bg-red-700 focus:outline-none focus:bg-red-700"
-                                    href="#">
+                                    class="inline-flex items-center gap-x-1 text-xs font-medium bg-red-600 rounded-lg py-1 px-1.5 text-black decoration-2 hover:bg-red-700 focus:outline-none focus:bg-red-700">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">

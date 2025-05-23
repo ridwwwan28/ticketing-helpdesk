@@ -7,7 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
-    <title>Dashboard Page</title>
+    <title>DANPAC TICKET</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}" type="image/png">
 </head>
 
 <body class="bg-gray-50">

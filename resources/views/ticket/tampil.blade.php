@@ -380,6 +380,7 @@
                                     class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                     value="{{ auth()->user()->name }}" disabled>
                                 <input type="hidden" name="email_user" value="{{ auth()->user()->email }}">
+                                <input type="hidden" name="nama_user" value="{{ auth()->user()->name }}">
                             </div>
 
                             <div class="lg:col-span-2">
@@ -388,6 +389,7 @@
                                 <select name="tipe_komplain" id="complain-type"
                                     class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                     required>
+
                                     <option value="" selected>-- Choose --</option>
                                     @foreach ($komplain_tipe as $data)
                                         <option value={{ $data->id }}>
