@@ -323,7 +323,12 @@
     <div class="w-[calc(100% - 260px)] ml-1 mr-1 lg:ml-[264px]">
         <!-- your content goes here ... -->
         <!-- Card Section -->
-        <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+        <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto border-b">
+            <div class="mb-2">
+                <p class="tracking-wide font-medium text-xl">
+                    DASHBOARD
+                </p>
+            </div>
             <!-- Grid -->
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 <!-- Card -->
@@ -335,7 +340,7 @@
                             </p>
                             <div class="mt-1 flex items-center gap-x-2">
                                 <h3 class="mt-1 text-xl font-medium text-gray-800">
-                                    {{ $tickets->count() }}
+                                    {{ $alltickets->count() }}
                                 </h3>
                             </div>
                         </div>
@@ -373,7 +378,7 @@
                             </p>
                             <div class="mt-1 flex items-center gap-x-2">
                                 <h3 class="mt-1 text-xl font-medium text-gray-800">
-                                    29.4%
+                                    29%
                                 </h3>
                             </div>
                         </div>
@@ -447,7 +452,7 @@
                             </p>
                             <div class="mt-1 flex items-center gap-x-2">
                                 <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
-                                    {{ $users->count() }}
+                                    {{ $allusers->count() }}
                                 </h3>
                             </div>
                         </div>
@@ -479,6 +484,137 @@
             <!-- End Grid -->
         </div>
         <!-- End Card Section -->
+
+        <!-- Card Section -->
+        <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto border-b">
+            <div class="mb-2">
+                <p class="tracking-wide font-medium text-xl">
+                    TRAFFIC
+                </p>
+            </div>
+            <!-- Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <!-- Card -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl">
+                    <div class="p-4 md:p-5 flex justify-between gap-x-3">
+                        <div>
+                            <p class="text-xs uppercase tracking-wide text-gray-500">
+                                Ticket Open
+                            </p>
+                            <div class="mt-1 flex items-center gap-x-2">
+                                <h3 class="mt-1 text-xl font-medium text-gray-800">
+                                    {{ $ticketopen->count() }}
+                                </h3>
+                            </div>
+                        </div>
+                        <div
+                            class="shrink-0 flex justify-center items-center size-[46px] bg-blue-600 text-white rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="shrink-0 size-5 lucide lucide-scroll-text-icon lucide-scroll-text">
+                                <path d="M15 12h-5" />
+                                <path d="M15 8h-5" />
+                                <path d="M19 17V5a2 2 0 0 0-2-2H4" />
+                                <path
+                                    d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <a class="py-3 px-4 md:px-5 inline-flex justify-between items-center text-sm text-gray-600 border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 rounded-b-xl"
+                        href="#">
+                        View reports
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </a>
+                </div>
+                <!-- End Card -->
+
+                <!-- Card -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl">
+                    <div class="p-4 md:p-5 flex justify-between gap-x-3">
+                        <div>
+                            <p class="text-xs uppercase tracking-wide text-gray-500">
+                                Ticket In Process
+                            </p>
+                            <div class="mt-1 flex items-center gap-x-2">
+                                <h3 class="mt-1 text-xl font-medium text-gray-800">
+                                    {{ $ticketprocess->count() }}
+                                </h3>
+                            </div>
+                        </div>
+                        <div
+                            class="shrink-0 flex justify-center items-center size-[46px] bg-blue-600 text-white rounded-full">
+                            <svg class="shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 22h14" />
+                                <path d="M5 2h14" />
+                                <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+                                <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <a class="py-3 px-4 md:px-5 inline-flex justify-between items-center text-sm text-gray-600 border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 rounded-b-xl"
+                        href="#">
+                        View reports
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </a>
+                </div>
+                <!-- End Card -->
+
+                <!-- Card -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl">
+                    <div class="p-4 md:p-5 flex justify-between gap-x-3">
+                        <div>
+                            <p class="text-xs uppercase tracking-wide text-gray-500">
+                                Ticket Closed
+                            </p>
+                            <div class="mt-1 flex items-center gap-x-2">
+                                <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
+                                    {{ $ticketclosed->count() }}
+                                </h3>
+                            </div>
+                        </div>
+                        <div
+                            class="shrink-0 flex justify-center items-center size-[46px] bg-blue-600 text-white rounded-full">
+                            <svg class="shrink-0 size-5 lucide lucide-file-check-icon lucide-file-check"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                                <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                                <path d="m9 15 2 2 4-4" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <a class="py-3 px-4 md:px-5 inline-flex justify-between items-center text-sm text-gray-600 border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 rounded-b-xl"
+                        href="#">
+                        View reports
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </a>
+                </div>
+                <!-- End Card -->
+
+            </div>
+            <!-- End Grid -->
+        </div>
+        <!-- End Card Section -->
+
     </div>
     <!-- End Content -->
     <!-- ========== END MAIN CONTENT ========== -->

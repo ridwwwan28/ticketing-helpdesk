@@ -11,9 +11,14 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $users = DB::table('users')->get();
-        $tickets = DB::table('tickets')->get();
-        return view('dashboard', compact('users', 'tickets'));
+        $allusers = DB::table('users')->get();
+        $alltickets = DB::table('tickets')->get();
+
+        $ticketopen = DB::table('tickets')->where('ticket_status', 'OPEN');
+        $ticketprocess = DB::table('tickets')->where('ticket_status', 'IN PROCESS');
+        $ticketclosed = DB::table('tickets')->where('ticket_status', 'CLOSED');
+
+        return view('dashboard', compact('allusers', 'alltickets', 'ticketopen', 'ticketprocess', 'ticketclosed'));
     }
 
     public function home()

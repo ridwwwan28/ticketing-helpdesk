@@ -7,20 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
-    <title>Login Page</title>
+    <title>DANPAC TICKET</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}" type="image/png">
 </head>
 
-<body class="bg-slate-200">
+<body class="bg-slate-200 flex items-center justify-center min-h-screen">
     <div class="container mx-auto max-w-md mt-8">
-        <!-- Logo -->
-        <div class="my-4">
-            <img src="img/danpac-logo-blue.png" alt="Danpac Logo" width="300" class="mx-auto">
-        </div>
-        <!-- EndLogo -->
-
         <div class=" bg-white border border-gray-200 rounded-xl shadow-lg">
             <div class="p-4 sm:p-7">
-                <div class="text-center">
+                <!-- Logo -->
+                <div>
+                    <img src="img/danpac-logo-blue.png" alt="Danpac Logo" width="300" class="mx-auto">
+                </div>
+                <!-- EndLogo -->
+                <hr>
+                <div class="mt-3 text-center">
                     <h1 class="block text-2xl font-bold text-gray-800">Sign in</h1>
                 </div>
 
@@ -30,11 +33,18 @@
                         Sign in to start your session
                     </div>
 
+                    <!-- Pesan Sukses/Error -->
                     @if (session('failed'))
-                        <div class="">
-                            <p id="hs-dismiss-button-label" class="text-xs font-normal">
-                                {{ session('failed') }}
-                            </p>
+                        <div class="my-2 bg-red-100  text-sm text-red-800 rounded-lg p-2" role="alert" tabindex="-1"
+                            aria-labelledby="hs-soft-color-success-label">
+                            <p class="font-semibold">{{ session('failed') }}</p>
+                        </div>
+                    @endif
+
+                    @if (session('status'))
+                        <div class="my-2 bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4"
+                            role="alert" tabindex="-1" aria-labelledby="hs-soft-color-success-label">
+                            {{ session('status') }}
                         </div>
                     @endif
 
@@ -43,14 +53,6 @@
                         @csrf
                         <div class="grid gap-y-4">
                             <!-- Form Group -->
-                            @error('email')
-                                <span class="mt-2 bg-red-500 text-sm text-white rounded-lg p-4">{{ $message }}</span>
-                                <div class="mt-2 bg-red-500 text-sm text-white rounded-lg p-4" role="alert" tabindex="-1"
-                                    aria-labelledby="hs-solid-color-danger-label">
-                                    <span id="hs-solid-color-danger-label" class="font-bold">Danger</span> alert! You should
-                                    check in on some of those fields below.
-                                </div>
-                            @enderror
                             <div>
                                 <label for="email" class="block text-sm mb-2">Email address</label>
                                 <div class="relative">
@@ -71,14 +73,11 @@
                             <!-- End Form Group -->
 
                             <!-- Form Group -->
-                            @error('password')
-                                <span>{{ $message }}</span>
-                            @enderror
                             <div>
                                 <div class="flex justify-between items-center">
                                     <label for="password" class="block text-sm mb-2">Password</label>
                                     <a class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium"
-                                        href="../examples/html/recover-account.html">Forgot password?</a>
+                                        href="/forgot-password">Forgot password?</a>
                                 </div>
                                 <div class="relative">
                                     <input type="password" id="password" name="password"
