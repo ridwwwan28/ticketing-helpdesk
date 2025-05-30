@@ -15,9 +15,11 @@ class DashboardController extends Controller
         $tickets = DB::table('tickets')
             ->join('users', 'tickets.username', '=', 'users.email')
             ->join('complain_types', 'tickets.tipe_komplain', '=', 'complain_types.id')
+            ->where('ticket_status', 'OPEN')
+            ->orWhere('ticket_status', 'IN PROCESS')
             ->select('tickets.*', 'users.name', 'users.email', 'users.role', 'complain_types.tipe_komplain')
             ->orderBy('level')
-            ->paginate(5);
+            ->paginate(10);
 
         $allusers = DB::table('users')->get();
         $alltickets = DB::table('tickets')->get();

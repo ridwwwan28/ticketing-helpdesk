@@ -21,7 +21,7 @@
             <div class="me-5 lg:me-0 lg:hidden">
                 <!-- Logo -->
                 <a class="flex-none rounded-md text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
-                    href="#" aria-label="Preline">
+                    href="/home" aria-label="Danpac">
                     <img src="img/danpac-logo-blue.png" alt="Danpac Logo" width="200">
                 </a>
                 <!-- End Logo -->
@@ -138,16 +138,16 @@
             <!-- Breadcrumb -->
             <ol class="ms-3 flex items-center whitespace-nowrap">
                 <li class="flex items-center text-sm text-gray-800">
-                    Application Layout
+                    Home
                     <svg class="shrink-0 mx-3 overflow-visible size-2.5 text-gray-400" width="16" height="16"
                         viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                     </svg>
                 </li>
-                <li class="text-sm font-semibold text-gray-800 truncate" aria-current="page">
+                {{-- <li class="text-sm font-semibold text-gray-800 truncate" aria-current="page">
                     Home
-                </li>
+                </li> --}}
             </ol>
             <!-- End Breadcrumb -->
         </div>
@@ -645,7 +645,7 @@
                 <div class="p-4 overflow-y-auto">
                     <!-- Content Modal -->
                     <div class="flex justify-center mx-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200 hidden md:table">
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col" class="ps-6 lg:ps-1 pe-6 py-3 text-start">
@@ -783,6 +783,91 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <!-- LIST UNTUK MOBILE -->
+                    @foreach ($tickets as $no => $ticket)
+                        <div class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 m-1 p-4 border rounded shadow">
+                            <div class="text-sm">
+                                <div><strong>NO :</strong> {{ $no + 1 }}</div>
+                                <div><strong>NO. TICKET :</strong> {{ $ticket->no_tiket }}</div>
+                                <div><strong>PENGGUNA :</strong> {{ $ticket->name }}</div>
+                                <div><strong>KATEGORI KENDALA :</strong> {{ $ticket->tipe_komplain }}</div>
+                                <div>
+                                    <strong>Status :</strong>
+                                    @if ($ticket->ticket_status == 'OPEN')
+                                        <span class="text-red-800 font-semibold"> {{ $ticket->ticket_status }}</span>
+                                    @endif
+
+                                    @if ($ticket->ticket_status == 'IN PROCESS')
+                                        <span class="text-orange-600 font-semibold">
+                                            {{ $ticket->ticket_status }}</span>
+                                    @endif
+
+                                    @if ($ticket->ticket_status == 'CLOSED')
+                                        <span class="text-green-600 font-semibold">
+                                            {{ $ticket->ticket_status }}</span>
+                                    @endif
+                                </div>
+                                <div class="mt-4 gap-4">
+                                    <a href="{{ route('ticket.show', $ticket->id) }}"
+                                        class="inline-flex items-center gap-x-1 text-xs font-medium bg-blue-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-list">
+                                            <path d="M3 12h.01" />
+                                            <path d="M3 18h.01" />
+                                            <path d="M3 6h.01" />
+                                            <path d="M8 12h13" />
+                                            <path d="M8 18h13" />
+                                            <path d="M8 6h13" />
+                                        </svg>
+                                        DETAIL
+                                    </a>
+
+                                    @if (auth()->user()->role != 'user' && $ticket->ticket_status != 'CLOSED')
+                                        <a href="{{ route('ticket.edit', $ticket->id) }}"
+                                            class="inline-flex items-center gap-x-1 text-xs font-medium bg-orange-400 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-orange-500 focus:outline-none focus:bg-orange-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-pencil">
+                                                <path
+                                                    d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                                                <path d="m15 5 4 4" />
+                                            </svg>
+                                            EDIT
+                                        </a>
+                                    @endif
+
+                                    @if (auth()->user()->role != 'user' && $ticket->ticket_status != 'CLOSED')
+                                        <form method="POST" action="{{ route('ticket.destroy', $ticket->id) }}"
+                                            onclick="return confirm('Apakah Anda Yakin?')"
+                                            class="inline-flex items-center">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="inline-flex items-center gap-x-1 text-xs font-medium bg-red-500 rounded-lg py-1 px-1.5 text-white decoration-2 hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="lucide lucide-trash-2">
+                                                    <path d="M3 6h18" />
+                                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                                    <line x1="10" x2="10" y1="11"
+                                                        y2="17" />
+                                                    <line x1="14" x2="14" y1="11"
+                                                        y2="17" />
+                                                </svg>
+                                                HAPUS
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                     <!-- End Content Modal -->
                 </div>
                 <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">

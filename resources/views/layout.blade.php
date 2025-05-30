@@ -26,10 +26,17 @@
         <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
             <div class="me-5 lg:me-0 lg:hidden">
                 <!-- Logo -->
-                <a class="flex-none rounded-md text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
-                    href="#" aria-label="Preline">
-                    <img src="{{ asset('img/danpac-logo-blue.png') }}" alt="Danpac Logo" width="200">
-                </a>
+                @if (auth()->user()->role == 'user')
+                    <a class="flex-none rounded-md text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
+                        href="/home" aria-label="Danpac">
+                        <img src="{{ asset('img/danpac-logo-blue.png') }}" alt="Danpac Logo" width="200">
+                    </a>
+                @else
+                    <a class="flex-none rounded-md text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
+                        href="/dashboard" aria-label="Danpac">
+                        <img src="{{ asset('img/danpac-logo-blue.png') }}" alt="Danpac Logo" width="200">
+                    </a>
+                @endif
                 <!-- End Logo -->
 
                 <div class="lg:hidden ms-1">
@@ -143,14 +150,25 @@
 
             <!-- Breadcrumb -->
             <ol class="ms-3 flex items-center whitespace-nowrap">
-                <li class="flex items-center text-sm text-gray-800">
-                    Application Layout
-                    <svg class="shrink-0 mx-3 overflow-visible size-2.5 text-gray-400" width="16" height="16"
-                        viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                </li>
+                @if (auth()->user()->role == 'user')
+                    <li class="flex items-center text-sm text-gray-800">
+                        Home
+                        <svg class="shrink-0 mx-3 overflow-visible size-2.5 text-gray-400" width="16"
+                            height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </li>
+                @else
+                    <li class="flex items-center text-sm text-gray-800">
+                        Dashboard
+                        <svg class="shrink-0 mx-3 overflow-visible size-2.5 text-gray-400" width="16"
+                            height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </li>
+                @endif
                 <li class="text-sm font-semibold text-gray-800 truncate" aria-current="page">
                     Ticket
                 </li>
@@ -174,10 +192,17 @@ hs-overlay-open:translate-x-0
         <div class="relative flex flex-col h-full max-h-full">
             <div class="px-8 pt-4">
                 <!-- Logo -->
-                <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
-                    href="#" aria-label="Preline">
-                    <img src="{{ asset('img/danpac-logo-wh.png') }}" alt="Danpac Logo" width="150">
-                </a>
+                @if (auth()->user()->role == 'user')
+                    <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
+                        href="/home" aria-label="Preline">
+                        <img src="{{ asset('img/danpac-logo-wh.png') }}" alt="Danpac Logo" width="150">
+                    </a>
+                @else
+                    <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
+                        href="/dashboard" aria-label="Preline">
+                        <img src="{{ asset('img/danpac-logo-wh.png') }}" alt="Danpac Logo" width="150">
+                    </a>
+                @endif
                 <!-- End Logo -->
             </div>
 
