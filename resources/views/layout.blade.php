@@ -53,6 +53,9 @@
                 </div>
 
                 <div class="flex flex-row items-center justify-end gap-1">
+                    <div>
+                        <p class="text-sm font-semibold uppercase text-gray-800">{{ auth()->user()->name }}</p>
+                    </div>
                     <button type="button"
                         class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
                         <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"

@@ -18,13 +18,26 @@ class TicketController extends Controller
 {
     function tampil(): View
     {
-        // ambil semua ticket
-        $tickets = DB::table('tickets')
-            ->join('users', 'tickets.username', '=', 'users.email')
-            ->join('complain_types', 'tickets.tipe_komplain', '=', 'complain_types.id')
-            ->select('tickets.*', 'users.name', 'users.email', 'users.role', 'complain_types.tipe_komplain')
-            ->orderBy('level')
-            ->paginate(10);
+        $role = Auth::user()->role;
+        $email = Auth::user()->email;
+
+        if ($role == 'user') {
+            $tickets = DB::table('tickets')
+                ->join('users', 'tickets.username', '=', 'users.email')
+                ->join('complain_types', 'tickets.tipe_komplain', '=', 'complain_types.id')
+                ->where('tickets.username', $email)
+                ->select('tickets.*', 'users.name', 'users.email', 'users.role', 'complain_types.tipe_komplain')
+                ->orderBy('level')
+                ->paginate(10);
+        } else {
+            // ambil semua ticket
+            $tickets = DB::table('tickets')
+                ->join('users', 'tickets.username', '=', 'users.email')
+                ->join('complain_types', 'tickets.tipe_komplain', '=', 'complain_types.id')
+                ->select('tickets.*', 'users.name', 'users.email', 'users.role', 'complain_types.tipe_komplain')
+                ->orderBy('level')
+                ->paginate(10);
+        }
 
         $komplain_tipe = ComplainType::all();
 
