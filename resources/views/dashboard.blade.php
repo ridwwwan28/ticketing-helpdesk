@@ -586,7 +586,7 @@
                                 Ticket Closed
                             </p>
                             <div class="mt-1 flex items-center gap-x-2">
-                                <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
+                                <h3 class="mt-1 text-xl font-medium text-gray-800">
                                     {{ $ticketclosed->count() }}
                                 </h3>
                             </div>
