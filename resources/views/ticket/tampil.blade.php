@@ -29,7 +29,7 @@
 
     <!-- Table -->
     <div class="">
-        <table class="min-w-full divide-y divide-gray-200 hidden md:table">
+        <table id="example" class="min-w-full divide-y divide-gray-200 hidden md:table">
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col" class="ps-6 lg:ps-1 pe-6 py-3 text-start">
@@ -132,21 +132,37 @@
                         <td class="size-px whitespace-nowrap">
                             <div class="py-2 px-2">
                                 <span class="text-xs text-gray-800">
-                                    {{ $ticket->tgl_buat }}
+                                    @if (auth()->user()->role == 'user')
+                                        {{ \Carbon\Carbon::parse($ticket->tgl_buat)->format('d M Y') }}
+                                    @else
+                                        {{ \Carbon\Carbon::parse($ticket->tgl_buat)->format('d M Y H:i:s') }}
+                                    @endif
                                 </span>
                             </div>
                         </td>
                         <td class="size-px whitespace-nowrap">
                             <div class="py-2 px-2">
                                 <span class="text-xs text-gray-800">
-                                    {{ $ticket->tgl_estimasi }}
+                                    @if ($ticket->tgl_estimasi != null)
+                                        @if (auth()->user()->role == 'user')
+                                            {{ \Carbon\Carbon::parse($ticket->tgl_estimasi)->format('d M Y') }}
+                                        @else
+                                            {{ \Carbon\Carbon::parse($ticket->tgl_estimasi)->format('d M Y H:i:s') }}
+                                        @endif
+                                    @endif
                                 </span>
                             </div>
                         </td>
                         <td class="size-px whitespace-nowrap">
                             <div class="py-2 px-2">
                                 <span class="text-xs text-gray-800">
-                                    {{ $ticket->tgl_selesai }}
+                                    @if ($ticket->tgl_selesai != null)
+                                        @if (auth()->user()->role == 'user')
+                                            {{ \Carbon\Carbon::parse($ticket->tgl_selesai)->format('d M Y') }}
+                                        @else
+                                            {{ \Carbon\Carbon::parse($ticket->tgl_selesai)->format('d M Y H:i:s') }}
+                                        @endif
+                                    @endif
                                 </span>
                             </div>
                         </td>
@@ -350,19 +366,7 @@
     <!-- END LIST UNTUK MOBILE -->
 
     <!-- Footer -->
-    <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200">
-        <div>
-            <p class="text-sm text-gray-600">
-                <span class="font-semibold text-gray-800">{{ $tickets->count() }}</span> results
-            </p>
-        </div>
 
-        <div>
-            <div class="inline-flex gap-x-2">
-                {{ $tickets->links() }}
-            </div>
-        </div>
-    </div>
     <!-- End Footer -->
 
     <!-- Modals -->

@@ -14,6 +14,8 @@
             display: none !important;
         }
     </style>
+    <link href="https://unpkg.com/preline@2.7.0/dist/preline.min.css" rel="stylesheet" />
+
     <title>DANPAC TICKET</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}" type="image/png">
@@ -395,15 +397,7 @@ hs-overlay-open:translate-x-0
     <!-- ========== END MAIN CONTENT ========== -->
 
     <!-- Javascript -->
-    <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/datatables.net/js/dataTables.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('./node_modules/lodash/lodash.min.js') }}"></script>
-    <script src="{{ asset('./node_modules/dropzone/dist/dropzone-min.js') }}"></script>
-
-    <script>
-        window.HSStaticMethods.autoInit();
-    </script>
 
     <script>
         //message with sweetalert
@@ -425,6 +419,7 @@ hs-overlay-open:translate-x-0
             })
         @endif
     </script>
+
 
     <!-- End Javascript -->
 </body>

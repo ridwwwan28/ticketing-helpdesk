@@ -2,7 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "tailwindcss";
-/* Preline UI */
-@import "../../node_modules/preline/variants.css";
-@source "../../node_modules/preline/dist/*.js";
+/* Tambahkan setelah semua @tailwind directive */
+@import "./custom-datatables.css"; /* jika kamu pisahkan ke file sendiri */
+
+.dataTables_wrapper .dataTables_filter input {
+    @apply border-gray-300 rounded-md shadow-sm mr-2;
+}
+
+/* Optional: Tambahkan untuk memperbaiki tampilan paging */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    @apply px-2 py-1 border rounded mx-1 text-sm text-gray-700 bg-white hover:bg-gray-100;
+}
+
+/* Reset style default datatables.net-buttons agar Tailwind bisa mengatur tampilannya */
+button.dt-button {
+    @apply bg-transparent border-0 shadow-none rounded-none px-0 py-0 text-inherit;
+}
+
+button.dt-button span {
+    @apply inline-flex items-center gap-1;
+}
+
+div.dt-button-collection {
+    @apply bg-white rounded shadow-md p-2 space-y-1 z-50;
+}
+
+div.dt-button-collection a.dt-button {
+    @apply block w-full text-left px-3 py-1 text-sm rounded hover:bg-gray-100 text-gray-700;
+}
+
+/* Line Halaman */
+.dataTables_wrapper .dataTables_paginate {
+    @apply mt-1 flex justify-end items-center gap-1;
+}
+
+/* Tombol halaman */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    /* @apply px-3 py-1 border rounded text-sm text-gray-700 bg-white hover:bg-gray-100 transition; */
+    @apply inline-flex items-center justify-center w-8 h-8 text-sm font-medium border border-gray-300 rounded-full text-gray-700 bg-white hover:bg-gray-100 transition;
+}
+
+/* Info jumlah data */
+.dataTables_wrapper .dataTables_info {
+    @apply text-sm text-gray-500 justify-start;
+}
+
+/* Tombol yang aktif */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    @apply bg-blue-500 text-white border-blue-500 font-semibold;
+}
+
+/* Tombol yang non aktif */
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    @apply opacity-50 cursor-not-allowed;
+}

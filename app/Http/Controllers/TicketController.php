@@ -28,7 +28,7 @@ class TicketController extends Controller
                 ->where('tickets.username', $email)
                 ->select('tickets.*', 'users.name', 'users.email', 'users.role', 'complain_types.tipe_komplain')
                 ->orderBy('level')
-                ->paginate(10);
+                ->get();
         } else {
             // ambil semua ticket
             $tickets = DB::table('tickets')
@@ -36,7 +36,7 @@ class TicketController extends Controller
                 ->join('complain_types', 'tickets.tipe_komplain', '=', 'complain_types.id')
                 ->select('tickets.*', 'users.name', 'users.email', 'users.role', 'complain_types.tipe_komplain')
                 ->orderBy('level')
-                ->paginate(10);
+                ->get();
         }
 
         $komplain_tipe = ComplainType::all();
@@ -73,13 +73,17 @@ class TicketController extends Controller
         $ticket->ticket_status = "OPEN";
         $ticket->save();
 
+        $katKendala = DB::table('complain_types')
+            ->where('complain_types.id', $ticket->tipe_komplain)
+            ->firstOrFail();
+
         // Kirim email notifikasi
         $data = [
             'subject' => '[' . $ticket->no_tiket . ']',
             'title' => 'Nomor Ticket ' . $ticket->no_tiket,
             'body1' => 'No. Ticket : ' . $ticket->no_tiket,
             'body2' => ' Dari : ' . $request->nama_user,
-            'body3' => 'Kategori Kendala : ' . $ticket->tipe_komplain,
+            'body3' => 'Kategori Kendala : ' . $katKendala->tipe_komplain,
             'body4' => 'Kendala : ' . $ticket->kendala
         ];
 
@@ -127,10 +131,7 @@ class TicketController extends Controller
         $ticket->prioritas = $request->prioritas;
         $ticket->ticket_status = $request->status;
 
-        // isi tgl selesai
-        if ($ticket->ticket_status === 'CLOSED') {
-            $ticket->tgl_selesai = date('Y-m-d H:i:s');
-        }
+
 
         // isi tgl estimasi sesuai dari prioritas yang dipilih
         if ($ticket->ticket_status === 'IN PROCESS' && $ticket->prioritas === '1') {
@@ -141,6 +142,29 @@ class TicketController extends Controller
             $ticket->tgl_estimasi = Carbon::parse($ticket->tgl_buat)->addDays(3);
         } elseif ($ticket->ticket_status === 'IN PROCESS' && $ticket->prioritas === '4') {
             $ticket->tgl_estimasi = Carbon::parse($ticket->tgl_buat)->addDays(4);
+        }
+
+        // isi tgl selesai
+        if ($ticket->ticket_status === 'CLOSED') {
+            $ticket->tgl_selesai = date('Y-m-d H:i:s');
+
+            $katKendala = DB::table('complain_types')
+                ->where('complain_types.id', $ticket->tipe_komplain)
+                ->firstOrFail();
+
+            // Kirim email notifikasi
+            $dataEmail = [
+                'subject' => '[' . $ticket->no_tiket . ']',
+                'title' => 'Nomor Ticket ' . $ticket->no_tiket,
+                'body1' => 'No. Ticket : ' . $ticket->no_tiket,
+                'body2' => ' Dari : ' . $request->nama_user,
+                'body3' => 'Kategori Kendala : ' . $katKendala->tipe_komplain,
+                'body4' => 'Kendala : ' . $ticket->kendala,
+                'body5' => 'Status : ' . $ticket->status
+            ];
+
+            // kirim ke email tujuan
+            Mail::to($ticket->username)->send(new DataAddedNotification($dataEmail));
         }
 
         // update data ticket
