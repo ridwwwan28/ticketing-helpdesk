@@ -33,7 +33,7 @@ class AuthController extends Controller
 
     public function tampilUser()
     {
-        $users = User::paginate(10);
+        $users = User::get();
 
         return view('auth.users', compact('users'));
     }

@@ -29,7 +29,7 @@
 
     <!-- Table -->
     <div class="">
-        <table id="example" class="min-w-full divide-y divide-gray-200 hidden md:table">
+        <table id="ticket-table" class="min-w-full divide-y divide-gray-200 hidden md:table">
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col" class="ps-6 lg:ps-1 pe-6 py-3 text-start">

@@ -30,7 +30,7 @@
     <!-- End Header -->
 
     <!-- Table -->
-    <table class="min-w-full divide-y divide-gray-200">
+    <table id="user-table" class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3 text-start">
@@ -185,21 +185,6 @@
     </table>
     <!-- End Table -->
 
-    <!-- Footer -->
-    <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200">
-        <div>
-            <p class="text-sm text-gray-600">
-                <span class="font-semibold text-gray-800">{{ $users->count() }}</span> results
-            </p>
-        </div>
-
-        <div>
-            <div class="inline-flex gap-x-2">
-                {{ $users->links() }}
-            </div>
-        </div>
-    </div>
-    <!-- End Footer -->
     </div>
     </div>
     </div>
