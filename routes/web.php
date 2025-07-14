@@ -78,6 +78,8 @@ Route::group(['middleware' => ['auth', 'check_role:superadmin,admin,user']], fun
 Route::group(['middleware' => ['auth', 'check_role:superadmin,admin']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
+    Route::post('ticket/submit', [TicketController::class, 'submit'])->name('ticket.submit');
+
     Route::get('/users', [AuthController::class, 'tampilUser'])->name('auth.users');
     Route::resource('/auth', \App\Http\Controllers\AuthController::class);
     Route::post('auth/submit', [AuthController::class, 'submit'])->name('auth.submit');

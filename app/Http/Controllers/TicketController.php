@@ -45,52 +45,67 @@ class TicketController extends Controller
         return view('ticket.tampil', compact('tickets'), compact('komplain_tipe'));
     }
 
-    function submit(Request $request): RedirectResponse
+    function submit(Request $request)
     {
-        // ambil record ticket yg terakhir
-        $ambilTicket = Ticket::latest()->first();
-        $kodeDepan = "DP";
-        $kodeTahun = date('Y');
-        $kodeBulan = date('m');
+        $maxRetry = 5;
+        $attempt = 0;
 
-        if ($ambilTicket == null) {
-            // kode pertama;
-            $nomorUrut = "0001";
-        } else {
-            // kode berikutnya
-            $nomorUrut = substr($ambilTicket->no_tiket, 9, 4) + 1;
+        do {
+            try {
+                DB::beginTransaction();
 
-            $nomorUrut = str_pad($nomorUrut, 4, "0", STR_PAD_LEFT);
-        }
-        $kodeTicket = $kodeDepan . '-' . $kodeTahun . $kodeBulan . $nomorUrut;
+                $kodeDepan = "DP";
+                $kodeTahun = date('Y');
+                $kodeBulan = date('m');
 
-        $ticket = new Ticket();
-        $ticket->no_tiket = $kodeTicket;
-        $ticket->username = $request->email_user;
-        $ticket->tipe_komplain = $request->tipe_komplain;
-        $ticket->kendala = $request->kendala;
-        $ticket->tgl_buat = date('Y-m-d H:i:s');
-        $ticket->ticket_status = "OPEN";
-        $ticket->save();
+                // Hitung jumlah tiket di bulan berjalan untuk nomor urut
+                $count = Ticket::whereYear('created_at', $kodeTahun)
+                    ->whereMonth('created_at', $kodeBulan)
+                    ->count();
 
-        $katKendala = DB::table('complain_types')
-            ->where('complain_types.id', $ticket->tipe_komplain)
-            ->firstOrFail();
+                $nomorUrut = str_pad($count + 1, 4, "0", STR_PAD_LEFT);
+                $kodeTicket = $kodeDepan . '-' . $kodeTahun . $kodeBulan . $nomorUrut;
 
-        // Kirim email notifikasi
-        $data = [
-            'subject' => '[' . $ticket->no_tiket . ']',
-            'title' => 'Nomor Ticket ' . $ticket->no_tiket,
-            'body1' => 'No. Ticket : ' . $ticket->no_tiket,
-            'body2' => ' Dari : ' . $request->nama_user,
-            'body3' => 'Kategori Kendala : ' . $katKendala->tipe_komplain,
-            'body4' => 'Kendala : ' . $ticket->kendala
-        ];
+                $ticket = new Ticket();
+                $ticket->no_tiket = $kodeTicket;
+                $ticket->username = $request->email_user;
+                $ticket->tipe_komplain = $request->tipe_komplain;
+                $ticket->kendala = $request->kendala;
+                $ticket->tgl_buat = date('Y-m-d H:i:s');
+                $ticket->ticket_status = "OPEN";
+                $ticket->save();
 
-        // kirim ke email tujuan
-        Mail::to($ticket->username)->send(new DataAddedNotification($data));
+                DB::commit();
+                $katKendala = DB::table('complain_types')
+                    ->where('complain_types.id', $ticket->tipe_komplain)
+                    ->firstOrFail();
 
-        return redirect()->route('ticket.tampil')->with(['success' => 'Data Berhasil Disimpan']);
+                // Kirim email notifikasi
+                $data = [
+                    'subject' => '[' . $ticket->no_tiket . ']',
+                    'title' => 'Nomor Ticket ' . $ticket->no_tiket,
+                    'body1' => 'No. Ticket : ' . $ticket->no_tiket,
+                    'body2' => ' Dari : ' . $request->nama_user,
+                    'body3' => 'Kategori Kendala : ' . $katKendala->tipe_komplain,
+                    'body4' => 'Kendala : ' . $ticket->kendala
+                ];
+
+                // kirim ke email tujuan
+                Mail::to($ticket->username)->send(new DataAddedNotification($data));
+                return redirect()->route('ticket.tampil')->with(['success' => 'Ticket Berhasil Dibuat dengan Nomor ' . $kodeTicket]);
+            } catch (\Illuminate\Database\QueryException $ex) {
+                DB::rollBack();
+
+                if ($ex->errorInfo[1] == 1062) {
+                    // Duplicate entry, retry
+                    $attempt++;
+
+                    if ($attempt >= $maxRetry) {
+                        return redirect()->back()->with(['error' => 'Gagal membuat ticket, silahkan coba lagi']);
+                    }
+                }
+            }
+        } while ($attempt < $maxRetry);
     }
 
     public function show(string $id): View
