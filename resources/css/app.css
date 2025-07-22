@@ -33,7 +33,7 @@ div.dt-button-collection a.dt-button {
 
 /* Line Halaman */
 .dataTables_wrapper .dataTables_paginate {
-    @apply mt-1 flex justify-end items-center gap-1;
+    @apply mt-1 flex justify-end items-center md:gap-1;
 }
 
 /* Tombol halaman */

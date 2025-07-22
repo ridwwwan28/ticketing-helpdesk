@@ -30,9 +30,9 @@ import "preline";
 document.addEventListener("DOMContentLoaded", () => {
     $("#ticket-table").DataTable({
         dom:
-            "<'flex flex-col md:flex-row items-center justify-between gap-4 mx-2 mt-3 mb-4'Bf>" +
+            "<'hidden md:flex md:flex-col lg:flex-row md:items-center md:justify-between md:gap-4 md:mx-2 md:mt-3 md:mb-4'Bf>" +
             "<'overflow-x-auto't>" +
-            "<'flex flex-col md:flex-row items-center justify-between gap-4 mx-2 my-8'<'infoWrapper'i><'paginationWrapper'p>>",
+            "<'hidden md:flex md:flex-col lg:flex-row md:items-center md:justify-between md:gap-4 md:mx-2 md:my-8'<'infoWrapper'i><'paginationWrapper'p>>",
 
         buttons: [
             {
