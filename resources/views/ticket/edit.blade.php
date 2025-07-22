@@ -59,16 +59,16 @@
                         class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                         <option value="">-- Prioritas --</option>
                         <option value=1 @if ($ticket->prioritas == 1) @selected(true) @endif>
-                            Prioritas 1 – Kritikal (Critical)
+                            Prioritas 1 – Mendesak
                         </option>
                         <option value=2 @if ($ticket->prioritas == 2) @selected(true) @endif>
-                            Prioritas 2 – Tinggi (High)
+                            Prioritas 2 – Khusus
                         </option>
                         <option value=3 @if ($ticket->prioritas == 3) @selected(true) @endif>
-                            Prioritas 3 – Sedang (Medium)
+                            Prioritas 3 – Rutin
                         </option>
                         <option value=4 @if ($ticket->prioritas == 4) @selected(true) @endif>
-                            Prioritas 4 – Rendah (Low)
+                            Prioritas 4 – Berkala
                         </option>
 
                     </select>
