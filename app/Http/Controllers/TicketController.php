@@ -59,19 +59,28 @@ class TicketController extends Controller
                 $kodeBulan = date('m');
 
                 // Hitung jumlah tiket di bulan berjalan untuk nomor urut
-                $count = Ticket::whereYear('created_at', $kodeTahun)
+                $lastTicket = Ticket::whereYear('created_at', $kodeTahun)
                     ->whereMonth('created_at', $kodeBulan)
-                    ->count();
+                    ->lockForUpdate()
+                    ->orderByDesc('no_tiket')
+                    ->first();
 
-                $nomorUrut = str_pad($count + 1, 4, "0", STR_PAD_LEFT);
-                $kodeTicket = $kodeDepan . '-' . $kodeTahun . $kodeBulan . $nomorUrut;
+                if ($lastTicket) {
+                    // Ambil 4 digit terakhir setelah prefix (DP-YYYYMM)
+                    $lastNumber = (int) substr($lastTicket->no_tiket, -4);
+                    $nomorUrut = $lastNumber + 1;
+                } else {
+                    $nomorUrut = 1;
+                }
+
+                $kodeTicket = $kodeDepan . '-' . $kodeTahun . $kodeBulan . str_pad($nomorUrut, 4, "0", STR_PAD_LEFT);
 
                 $ticket = new Ticket();
                 $ticket->no_tiket = $kodeTicket;
                 $ticket->username = $request->email_user;
                 $ticket->tipe_komplain = $request->tipe_komplain;
                 $ticket->kendala = $request->kendala;
-                $ticket->tgl_buat = date('Y-m-d H:i:s');
+                $ticket->tgl_buat = now();
                 $ticket->ticket_status = "OPEN";
                 $ticket->save();
 
@@ -103,6 +112,8 @@ class TicketController extends Controller
                     if ($attempt >= $maxRetry) {
                         return redirect()->back()->with(['error' => 'Gagal membuat ticket, silahkan coba lagi']);
                     }
+                } else {
+                    throw $ex;
                 }
             }
         } while ($attempt < $maxRetry);
